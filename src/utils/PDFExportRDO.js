@@ -51,7 +51,7 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     }
 
     // TÍTULO
-    doc.setFontSize(14);
+    doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     doc.text('RELATÓRIO DIÁRIO DE OBRA', 105, 25, { align: 'center' });
 
