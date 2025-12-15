@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* mesmo tom do bg-gray-50 (Tailwind) */
+body {
+  margin: 0;
+  background-color: #f9fafb;
+}
+
+@media (max-width: 640px) {
+  .col-mobile-larga {
+    width: 4.5rem; /* ajuste o valor que achar melhor */
+  }
+}

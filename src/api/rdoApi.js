@@ -1,4 +1,4 @@
-import { useLocalStorage } from '../hooks/useLocalStorage';
+// rdoApi uses browser localStorage directly
 
 let rdos = [];
 let projetos = [];

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 
-export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png', nomeUsuario = 'Usuário') => {
+export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nomeUsuario = 'Usuário') => {
   if (rdosSelecionados.length === 0) {
     alert('Selecione pelo menos um RDO para exportar!');
     return;
@@ -8,15 +8,15 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
 
   const doc = new jsPDF();
 
-  // ✅ ORDENAÇÃO POR DATA (mais antigo → mais recente)
+  // ✅ ORDENAÇÃO POR DATA (corrigido para PostgreSQL ISO)
   const rdosOrdenados = [...rdosSelecionados].sort((a, b) => {
-    const dataA = new Date(a.data + 'T00:00:00').getTime();
-    const dataB = new Date(b.data + 'T00:00:00').getTime();
+    const dataA = new Date(a.data).getTime();
+    const dataB = new Date(b.data).getTime();
     return dataA - dataB; // Dia 1, Dia 2, Dia 3...
   });
 
   const formatarData = (dataStr) => {
-    const data = new Date(dataStr + 'T00:00:00');
+    const data = new Date(dataStr);
     const dia = String(data.getDate()).padStart(2, '0');
     const mes = String(data.getMonth() + 1).padStart(2, '0');
     const ano = data.getFullYear();
@@ -33,21 +33,25 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     return `${horas}:${minutos.toString().padStart(2, '0')}`;
   };
 
-  rdosOrdenados.forEach((rdo, index) => {  // ✅ USA rdosOrdenados
+  rdosOrdenados.forEach((rdo, index) => {
     if (index > 0) doc.addPage();
 
-    // ✅ BUSCA PROJETO ROBUSTA
-    const projeto = projetos.find(p => 
-      String(p.id) === String(rdo.projeto_id) || 
-      p.id === rdo.projeto_id ||
-      p.id == rdo.projeto_id  // eslint-disable-line eqeqeq
-    ) || { nome: 'Nenhum Projeto Encontrado', cliente: 'Cliente não encontrado', codigo: '0000' };
+    // ✅ BUSCA PROJETO ROBUSTA (usa dados do banco se disponíveis)
+    const projeto = rdo.projeto_nome 
+      ? { nome: rdo.projeto_nome, cliente: rdo.projeto_cliente, codigo: rdo.projeto_codigo || '0000' }
+      : (projetos.find(p => 
+          String(p.id) === String(rdo.projeto_id) || 
+          p.id === rdo.projeto_id ||
+          p.id == rdo.projeto_id   
+        ) || { nome: 'Nenhum Projeto Encontrado', cliente: 'Cliente não encontrado', codigo: '0000' });
 
-    // LOGO
-    try {
-      doc.addImage(logoUrl, 'PNG', 15, 8, 30, 20);
-    } catch (e) {
-      console.warn('Logo não carregada:', e);
+    // ✅ LOGO - SÓ SE EXISTIR E FOR VÁLIDA
+    if (logoUrl) {
+      try {
+        doc.addImage(logoUrl, 'PNG', 15, 8, 30, 20);
+      } catch (e) {
+        console.warn('Logo não carregada:', e);
+      }
     }
 
     // TÍTULO
@@ -88,7 +92,7 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     doc.setFont('helvetica', 'normal');
     doc.text('NATUREZA DO SERVIÇO:', 15, yPos);
     doc.setFont('helvetica', 'bold');
-    doc.text(rdo.naturezaServico || 'Não encontrado', 60, yPos);
+    doc.text(rdo.natureza_servico || 'Não encontrado', 60, yPos); // ✅ corrigido nome campo
 
     // LEGENDA COMPACTA
     yPos += 8;
@@ -135,9 +139,11 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
 
     // HORAS LÍQUIDAS
     const totalHoras = rdo.horarios?.reduce((sum, h) => {
-      const dur = calcularDuracao(h.hora_inicio, h.hora_fim);
-      const partes = dur.split(':');
-      return sum + (parseInt(partes[0], 10) || 0) + ((parseInt(partes[1], 10) || 0) / 60);
+      if (!h.hora_inicio || !h.hora_fim) return sum;
+      const start = new Date(`1970-01-01T${h.hora_inicio}`);
+      const end = new Date(`1970-01-01T${h.hora_fim}`);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return sum;
+      return sum + (end - start) / (1000 * 60 * 60);
     }, 0) || 0;
 
     doc.setFontSize(10);
@@ -152,7 +158,7 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     yPos += 6;
     
     doc.setFontSize(8);
-    const textoRegistro = doc.splitTextToSize(rdo.descricaoDiaria || 'Descrição não informada', 170);
+    const textoRegistro = doc.splitTextToSize(rdo.descricao_diaria || 'Descrição não informada', 170);
     doc.text(textoRegistro, 15, yPos);
     yPos += (textoRegistro.length * 4) + 8;
 
@@ -180,7 +186,6 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     doc.text('VISTO LT/PM:', 15, posAssinaturas + 38);
     doc.setFont('helvetica', 'normal');
 
-
     // DIREITA - FISCALIZAÇÃO
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
@@ -195,5 +200,5 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = '/logo.png
     doc.text('RETORNO DIA:', 90, posAssinaturas + 60);
   });
 
-  doc.save(`RDOs_${formatarData(new Date().toISOString().split('T')[0])}.pdf`);
+  doc.save(`RDOs_${formatarData(new Date())}.pdf`);
 };

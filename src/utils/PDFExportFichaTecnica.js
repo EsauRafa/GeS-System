@@ -8,9 +8,9 @@ export const exportFichaTecnicaToPDF = (
   totais,
   mesAno,
   nomeUsuario = "Usuário",
-  logoUrl = "/logo.png" // ⬅️ igual ao RDO
+  logoUrl = "/GeS-System/logo.png"
 ) => {
-  const doc = new jsPDF(); // A4, mm
+  const doc = new jsPDF();
 
   const formatarTempo = (decimal) => {
     if (!decimal || decimal <= 0) return "0:00";
@@ -19,9 +19,9 @@ export const exportFichaTecnicaToPDF = (
     return `${h}:${m.toString().padStart(2, "0")}`;
   };
 
-  // LOGO (mesma posição do RDO)
+  // LOGO 
   try {
-    doc.addImage(logoUrl, "PNG", 15, 8, 30, 20); // x=15, y=8, largura=30, altura=20
+    doc.addImage(logoUrl, "PNG", 15, 8, 30, 20); 
   } catch (e) {
     console.warn("Logo não carregada na ficha técnica:", e);
   }
@@ -97,7 +97,7 @@ export const exportFichaTecnicaToPDF = (
     let dataFormatada = "--";
     try {
       dataFormatada = format(parseISO(dia.data), "dd/MM");
-    } catch (e) {}
+    } catch { /* ignorar data inválida */ }
 
     const row = [
       dataFormatada,

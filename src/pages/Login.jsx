@@ -85,11 +85,7 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-8 text-center">
-          <a href="/cadastro" className="text-blue-600 hover:text-blue-800 font-medium">
-            Ainda não tem conta? Cadastre-se
-          </a>
-        </div>
+        
       </div>
     </div>
   );

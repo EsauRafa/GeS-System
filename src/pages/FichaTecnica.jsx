@@ -1,34 +1,29 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
-import {
-  format,
-  parseISO,
-  startOfMonth,
-  endOfMonth,
-  eachDayOfInterval,
-  isSaturday,
-  isSunday,
-} from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { format } from "date-fns";
 import { exportFichaTecnicaToPDF } from "../utils/PDFExportFichaTecnica";
 import { FileText } from "lucide-react";
 import { exportResumoADMToPDF } from "../utils/PDFExportResumoADM";
 
-const feriadosFixos = [
-  "01-01",
-  "21-04",
-  "01-05",
-  "07-09",
-  "12-10",
-  "02-11",
-  "15-11",
-  "25-12",
-];
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.2.138:4000";
 
-function isFeriado(date) {
-  return feriadosFixos.includes(format(date, "dd-MM"));
-}
+const feriadosFixos = ["01-01", "21-04", "01-05", "07-09", "12-10", "02-11", "15-11", "25-12"];
+
+const formatDateForInput = (dateString) => {
+  if (!dateString) return format(new Date(), "yyyy-MM-dd");
+  return dateString.substring(0, 10);
+};
+
+const filtrarRdosPorMes = (rdos, mesAno) => {
+  const [ano, mes] = mesAno.split("-").map(Number);
+  const inicioMes = `${ano}-${String(mes).padStart(2, '0')}-01`;
+  const fimMes = `${ano}-${String(mes).padStart(2, '0')}-31`;
+  
+  return rdos.filter(rdo => {
+    const dataRdo = formatDateForInput(rdo.data);
+    return dataRdo >= inicioMes && dataRdo <= fimMes;
+  });
+};
 
 function tempoParaDecimal(tempoStr) {
   if (!tempoStr) return 0;
@@ -73,11 +68,34 @@ function calcularHorasNoturnas(inicio, fim) {
   return total / 60;
 }
 
+// 🔥 SEM TIMEZONE - CÁLCULO MANUAL DEZEMBRO 2025
+function getDiaSemana(dataStr) {
+  const dia = parseInt(dataStr.split('-')[2]);
+  // 01/12/2025 = seg (1), 15/12 = seg (15), 17/12 = qua (17)
+  const dias = ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'];
+  return dias[(dia - 1) % 7];
+}
+
+function isSabado(dataStr) {
+  const dia = parseInt(dataStr.split('-')[2]);
+  return (dia - 1) % 7 === 5; // sábados
+}
+
+function isDomingo(dataStr) {
+  const dia = parseInt(dataStr.split('-')[2]);
+  return (dia - 1) % 7 === 6; // domingos
+}
+
+function isFeriado(dataStr) {
+  return feriadosFixos.includes(dataStr.slice(8, 10) + '-' + dataStr.slice(5, 7));
+}
+
 export default function FichaTecnica() {
   const { usuario } = useAuth();
-  const [rdos] = useLocalStorage("rdos", []);
-  const [usuarios] = useLocalStorage("usuarios", []);
-  const [projetos] = useLocalStorage("projetos", []);
+  const [rdos, setRdos] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
+  const [projetos, setProjetos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const hoje = new Date();
   const [mesAno, setMesAno] = useState(format(hoje, "yyyy-MM"));
@@ -87,55 +105,74 @@ export default function FichaTecnica() {
   const isAdmin = !!usuario?.admin;
   const [usuarioSelecionado, setUsuarioSelecionado] = useState("atual");
 
-  // RDOs filtrados por usuário (logado / selecionado)
+  useEffect(() => {
+    const carregarDados = async () => {
+      if (!usuario) return;
+      
+      try {
+        setLoading(true);
+        const [rdosRes, usuariosRes, projetosRes] = await Promise.all([
+          fetch(`${API_URL}/api/rdos${!isAdmin ? `?usuario_id=${usuario.id}` : ''}`),
+          fetch(`${API_URL}/api/usuarios`),
+          fetch(`${API_URL}/api/projetos`)
+        ]);
+
+        if (rdosRes.ok) setRdos(await rdosRes.json());
+        if (usuariosRes.ok) setUsuarios(await usuariosRes.json());
+        if (projetosRes.ok) setProjetos(await projetosRes.json());
+      } catch (err) {
+        console.error('Erro ao carregar:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    carregarDados();
+  }, [usuario, isAdmin]);
+
   const rdosDoUsuario = useMemo(() => {
-    if (!usuario) return [];
+    if (!usuario || rdos.length === 0) return [];
+
+    let rdosFiltrados = rdos;
 
     if (isAdmin) {
       if (usuarioSelecionado === "atual") {
-        return rdos.filter((r) => String(r.usuario_id) === String(usuario.id));
+        rdosFiltrados = rdos.filter((r) => String(r.usuario_id) === String(usuario.id));
+      } else {
+        rdosFiltrados = rdos.filter((r) => String(r.usuario_id) === String(usuarioSelecionado));
       }
-      return rdos.filter(
-        (r) => String(r.usuario_id) === String(usuarioSelecionado)
-      );
+    } else {
+      rdosFiltrados = rdos.filter((r) => String(r.usuario_id) === String(usuario.id));
     }
 
-    return rdos.filter((r) => String(r.usuario_id) === String(usuario.id));
-  }, [rdos, usuario, isAdmin, usuarioSelecionado]);
+    return filtrarRdosPorMes(rdosFiltrados, mesAno);
+  }, [rdos, usuario, isAdmin, usuarioSelecionado, mesAno]);
 
-  // cálculo da ficha para o usuário selecionado
   useEffect(() => {
     const [ano, mes] = mesAno.split("-").map(Number);
-    const inicio = startOfMonth(new Date(ano, mes - 1));
-    const fim = endOfMonth(new Date(ano, mes - 1));
-    const diasDoMes = eachDayOfInterval({ start: inicio, end: fim });
+    const diasNoMes = new Date(ano, mes, 0).getDate();
+    
+    const resumoPorDia = [];
+    
+    for (let dia = 1; dia <= diasNoMes; dia++) {
+      const dataStr = `${ano}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+      
+      const rdoDia = rdosDoUsuario.filter((r) => 
+        formatDateForInput(r.data) === dataStr
+      );
 
-    const resumoPorDia = diasDoMes.map((date) => {
-      const dataStr = format(date, "yyyy-MM-dd");
-      const rdoDia = rdosDoUsuario.filter((r) => r.data === dataStr);
-
-      let inicioStr = "",
-        terminoStr = "",
-        deslocamento = 0,
-        descanso = 0,
-        totalBruto = 0,
-        totalSemDesloc = 0,
-        totalPago = 0,
-        hhNoturno = 0,
-        nomeProjeto = "";
+      let inicioStr = "", terminoStr = "", deslocamento = 0, descanso = 0, 
+          totalBruto = 0, totalSemDesloc = 0, totalPago = 0, hhNoturno = 0, nomeProjeto = "";
 
       if (rdoDia.length > 0) {
         const todosHorarios = rdoDia.flatMap((r) =>
           (r.horarios || []).filter((h) => h.hora_inicio && h.hora_fim)
         );
 
-        // pega o projeto do primeiro RDO do dia (ajuste se quiser outra regra)
         const projId = rdoDia[0]?.projeto_id;
         if (projId) {
-          const proj = projetos.find(
-            (p) => String(p.id) === String(projId)
-          );
-          nomeProjeto = proj?.nome || "";
+          const proj = projetos.find((p) => String(p.id) === String(projId));
+          nomeProjeto = proj?.nome || rdoDia[0]?.projeto_nome || "";
         }
 
         if (todosHorarios.length > 0) {
@@ -149,8 +186,7 @@ export default function FichaTecnica() {
           totalBruto = horaFimVisual - horaInicioVisual;
 
           todosHorarios.forEach((h) => {
-            const duracao =
-              tempoParaDecimal(h.hora_fim) - tempoParaDecimal(h.hora_inicio);
+            const duracao = tempoParaDecimal(h.hora_fim) - tempoParaDecimal(h.hora_inicio);
             hhNoturno += calcularHorasNoturnas(h.hora_inicio, h.hora_fim);
 
             if (h.atividade === "Deslocamento") {
@@ -164,9 +200,9 @@ export default function FichaTecnica() {
         }
       }
 
-      return {
+      resumoPorDia.push({
         data: dataStr,
-        diaSemana: format(date, "eee", { locale: ptBR }),
+        diaSemana: getDiaSemana(dataStr),
         inicio: inicioStr,
         termino: terminoStr,
         projeto: nomeProjeto,
@@ -174,12 +210,12 @@ export default function FichaTecnica() {
         descanso,
         totalSemDesloc,
         totalPago,
-        sabado: isSaturday(date) ? totalPago : 0,
-        domingo: isSunday(date) ? totalPago : 0,
-        feriado: isFeriado(date) ? totalPago : 0,
+        sabado: isSabado(dataStr) ? totalPago : 0,
+        domingo: isDomingo(dataStr) ? totalPago : 0,
+        feriado: isFeriado(dataStr) ? totalPago : 0,
         hhNoturno,
-      };
-    });
+      });
+    }
 
     setDadosMes(resumoPorDia);
   }, [mesAno, rdosDoUsuario, projetos]);
@@ -196,69 +232,54 @@ export default function FichaTecnica() {
       acc.feriado += d.feriado;
       return acc;
     },
-    {
-      deslocamento: 0,
-      descanso: 0,
-      totalSemDesloc: 0,
-      totalPago: 0,
-      sabado: 0,
-      domingo: 0,
-      feriado: 0,
-      hhNoturno: 0,
-    }
+    { deslocamento: 0, descanso: 0, totalSemDesloc: 0, totalPago: 0, sabado: 0, domingo: 0, feriado: 0, hhNoturno: 0 }
   );
 
   const isAdminUser = isAdmin;
-
   const funcionarioSelecionado = useMemo(() => {
     if (!isAdminUser || !usuario) return usuario;
     if (usuarioSelecionado === "atual") return usuario;
-    return (
-      usuarios.find((u) => String(u.id) === String(usuarioSelecionado)) ||
-      usuario
-    );
+    return usuarios.find((u) => String(u.id) === String(usuarioSelecionado)) || usuario;
   }, [isAdminUser, usuario, usuarioSelecionado, usuarios]);
 
   const resumoADM = useMemo(() => {
-  const horasSemanais50 = totais.totalPago + totais.descanso;
-  const domingoFeriado100 = totais.domingo + totais.feriado;
-  const adicionalNoturno = totais.hhNoturno;
+    const horasSemanais50 = totais.totalPago + totais.descanso;
+    const domingoFeriado100 = totais.domingo + totais.feriado;
+    const adicionalNoturno = totais.hhNoturno;
 
-  return {
-    nome: funcionarioSelecionado?.nome || "—",
-    horasSemanais50,
-    domingoFeriado100,
-    adicionalNoturno,
-    horasFormatadas: decimalParaTempo(horasSemanais50),
-    domingoFeriadoFormatado: decimalParaTempo(domingoFeriado100),
-    adicionalNoturnoFormatado: decimalParaTempo(adicionalNoturno),
-  };
-}, [funcionarioSelecionado, totais]);
+    return {
+      nome: funcionarioSelecionado?.nome || "—",
+      horasSemanais50,
+      domingoFeriado100,
+      adicionalNoturno,
+      horasFormatadas: decimalParaTempo(horasSemanais50),
+      domingoFeriadoFormatado: decimalParaTempo(domingoFeriado100),
+      adicionalNoturnoFormatado: decimalParaTempo(adicionalNoturno),
+    };
+  }, [funcionarioSelecionado, totais]);
 
-  const handleExportPDF = () => {
+  const handleExportPDF = useCallback(() => {
     if (dadosMes.length === 0) {
       alert("Nenhum dado para exportar!");
       return;
     }
-
     let nomeFicha = funcionarioSelecionado?.nome || "Funcionário";
-
     setIsGeneratingPDF(true);
     setTimeout(() => {
       exportFichaTecnicaToPDF(dadosMes, totais, mesAno, nomeFicha);
       setIsGeneratingPDF(false);
     }, 100);
-  };
+  }, [dadosMes, totais, mesAno, funcionarioSelecionado]);
 
-  const handleExportResumoADM = () => {
-  if (!isAdminUser) return;
-  exportResumoADMToPDF(funcionarioSelecionado, resumoADM, mesAno);
-};
+  const handleExportResumoADM = useCallback(() => {
+    if (!isAdminUser) return;
+    exportResumoADMToPDF(funcionarioSelecionado, resumoADM, mesAno);
+  }, [isAdminUser, funcionarioSelecionado, resumoADM, mesAno]);
 
-  if (!usuario) {
+  if (loading || !usuario) {
     return (
-      <div className="p-8">
-        <p>Carregando usuário...</p>
+      <div className="p-8 flex items-center justify-center">
+        <p>Carregando ficha técnica...</p>
       </div>
     );
   }
@@ -268,7 +289,6 @@ export default function FichaTecnica() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold mb-2">Ficha Técnica Mensal</h1>
-
           <label className="block text-sm text-gray-600 mb-2">
             Mês/Ano:
             <input
@@ -287,16 +307,10 @@ export default function FichaTecnica() {
                 value={usuarioSelecionado}
                 onChange={(e) => setUsuarioSelecionado(e.target.value)}
               >
-                <option value="atual">
-                  Usuário atual ({usuario?.nome || "—"})
-                </option>
-                {usuarios
-                  .filter((u) => u.ativo !== false)
-                  .map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.nome}
-                    </option>
-                  ))}
+                <option value="atual">Usuário atual ({usuario?.nome || "—"})</option>
+                {usuarios.filter((u) => u.ativo !== false).map((u) => (
+                  <option key={u.id} value={u.id}>{u.nome}</option>
+                ))}
               </select>
             </label>
           )}
@@ -321,7 +335,7 @@ export default function FichaTecnica() {
 
           <button
             onClick={handleExportPDF}
-            disabled={isGeneratingPDF}
+            disabled={isGeneratingPDF || dadosMes.length === 0}
             className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 flex items-center space-x-2 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isGeneratingPDF ? (
@@ -342,51 +356,36 @@ export default function FichaTecnica() {
       {isAdminUser && (
         <div className="mb-6 p-4 border rounded-xl bg-gray-50">
           <h2 className="text-lg font-semibold mb-2">Resumo para Administração</h2>
+          <p className="text-sm mb-1"><strong>Nome do funcionário:</strong> {resumoADM.nome}</p>
           <p className="text-sm mb-1">
-            <strong>Nome do funcionário:</strong> {resumoADM.nome}
+            <strong>Qntd hrs semanais/50% (PAGO + Descanso):</strong> {decimalParaTempo(resumoADM.horasSemanais50)}
           </p>
           <p className="text-sm mb-1">
-            <strong>Qntd hrs semanais/50% (PAGO + Descanso):</strong>{" "}
-            {decimalParaTempo(resumoADM.horasSemanais50)}
-          </p>
-          <p className="text-sm mb-1">
-            <strong>Domingo/Feriado 100%:</strong>{" "}
-            {decimalParaTempo(resumoADM.domingoFeriado100)}
+            <strong>Domingo/Feriado 100%:</strong> {decimalParaTempo(resumoADM.domingoFeriado100)}
           </p>
           <p className="text-sm">
-            <strong>Adicional Noturno:</strong>{" "}
-            {decimalParaTempo(resumoADM.adicionalNoturno)}
+            <strong>Adicional Noturno:</strong> {decimalParaTempo(resumoADM.adicionalNoturno)}
           </p>
         </div>
       )}
 
       <div className="overflow-x-auto shadow-xl border rounded-xl">
-        <table className="w-full table-fixed border-collapse border-2 border-gray-400 text-xs font-mono">
+        <table className="min-w-[1000px] w-full table-fixed border-collapse border-2 border-gray-400 text-[11px] sm:text-xs font-mono">
           <thead className="bg-gradient-to-r from-gray-100 to-gray-200 sticky top-0">
             <tr>
-              <th className="border border-gray-400 px-1 py-1 w-9">DATA</th>
-              <th className="border border-gray-400 px-1 py-1 w-8">DIA</th>
-              <th className="border border-gray-400 px-1 py-1 w-10">INÍCIO</th>
-              <th className="border border-gray-400 px-1 py-1 w-10">TÉRMINO</th>
-              <th className="border border-gray-400 px-1 py-1 w-24">PROJETO</th>
-              <th className="border border-gray-400 px-1 py-1 w-8">DESLOC</th>
-              <th className="border border-gray-400 px-1 py-1 w-9">Descanso</th>
-              <th className="border border-gray-400 px-1 py-1 w-11">S/DESLOC</th>
-              <th className="border border-gray-400 px-1 py-1 w-8 font-semibold">
-                PAGO
-              </th>
-              <th className="border border-gray-400 px-1 py-1 w-7 text-red-600 font-bold">
-                SÁB
-              </th>
-              <th className="border border-gray-400 px-1 py-1 w-7 text-red-600 font-bold">
-                DOM
-              </th>
-              <th className="border border-gray-400 px-1 py-1 w-7 text-red-600 font-bold">
-                FER
-              </th>
-              <th className="border border-gray-400 px-1 py-1 w-10 text-purple-600 font-bold">
-                NOTURNO
-              </th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-9">DATA</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-8">DIA</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-10">INÍCIO</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-10">TÉRMINO</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-24">PROJETO</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-8">DESLOC</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-9">Descanso</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-11">S/DESLOC</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-8 font-semibold">PAGO</th>
+              <th className="border border-gray-400 px-2 py-1 whitespace-nowrap w-7 text-red-600 font-bold">SÁB</th>
+              <th className="border border-gray-400 px-2 py-1 whitespace-nowrap w-7 text-red-600 font-bold">DOM</th>
+              <th className="border border-gray-400 px-2 py-1 whitespace-nowrap w-7 text-red-600 font-bold">FER</th>
+              <th className="border border-gray-400 px-1 py-1 whitespace-nowrap w-10 text-purple-600 font-bold">NOTURNO</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -399,78 +398,33 @@ export default function FichaTecnica() {
                     : "hover:bg-gray-50"
                 }
               >
-                <td className="border border-gray-400 px-1 text-center font-semibold">
-                  {format(parseISO(dia.data), "dd/MM")}
+                <td className="border border-gray-400 px-1 text-center font-semibold whitespace-nowrap">
+                  {dia.data.split('-').slice(1).reverse().join('/')}
                 </td>
-                <td className="border border-gray-400 px-1 text-center">
-                  {dia.diaSemana}
-                </td>
-                <td className="border border-gray-400 px-1 text-center">
-                  {dia.inicio || "--"}
-                </td>
-                <td className="border border-gray-400 px-1 text-center">
-                  {dia.termino || "--"}
-                </td>
-                <td className="border border-gray-400 px-1 truncate">
-                  {dia.projeto || "—"}
-                </td>
-                <td className="border border-gray-400 px-1 text-right">
-                  {decimalParaTempo(dia.deslocamento)}
-                </td>
-                <td className="border border-gray-400 px-1 text-right">
-                  {decimalParaTempo(dia.descanso)}
-                </td>
-                <td className="border border-gray-400 px-1 text-right">
-                  {decimalParaTempo(dia.totalSemDesloc)}
-                </td>
-                <td className="border border-gray-400 px-1 text-right font-semibold text-gray-900">
-                  {decimalParaTempo(dia.totalPago)}
-                </td>
-                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                  {dia.sabado > 0 ? decimalParaTempo(dia.sabado) : ""}
-                </td>
-                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                  {dia.domingo > 0 ? decimalParaTempo(dia.domingo) : ""}
-                </td>
-                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                  {dia.feriado > 0 ? decimalParaTempo(dia.feriado) : ""}
-                </td>
-                <td className="border border-gray-400 px-1 text-right text-purple-600 font-bold">
-                  {decimalParaTempo(dia.hhNoturno)}
-                </td>
+                <td className="border border-gray-400 px-1 text-center whitespace-nowrap">{dia.diaSemana}</td>
+                <td className="border border-gray-400 px-1 text-center whitespace-nowrap">{dia.inicio || "--"}</td>
+                <td className="border border-gray-400 px-1 text-center whitespace-nowrap">{dia.termino || "--"}</td>
+                <td className="border border-gray-400 px-1 truncate">{dia.projeto || "—"}</td>
+                                <td className="border border-gray-400 px-1 text-right whitespace-nowrap">{decimalParaTempo(dia.deslocamento)}</td>
+                <td className="border border-gray-400 px-1 text-right whitespace-nowrap">{decimalParaTempo(dia.descanso)}</td>
+                <td className="border border-gray-400 px-1 text-right whitespace-nowrap">{decimalParaTempo(dia.totalSemDesloc)}</td>
+                <td className="border border-gray-400 px-1 text-right font-semibold text-gray-900 whitespace-nowrap">{decimalParaTempo(dia.totalPago)}</td>
+                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold whitespace-nowrap">{dia.sabado > 0 ? decimalParaTempo(dia.sabado) : ""}</td>
+                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold whitespace-nowrap">{dia.domingo > 0 ? decimalParaTempo(dia.domingo) : ""}</td>
+                <td className="border border-gray-400 px-1 text-right text-red-600 font-bold whitespace-nowrap">{dia.feriado > 0 ? decimalParaTempo(dia.feriado) : ""}</td>
+                <td className="border border-gray-400 px-1 text-right text-purple-600 font-bold whitespace-nowrap">{decimalParaTempo(dia.hhNoturno)}</td>
               </tr>
             ))}
             <tr className="bg-gradient-to-r from-gray-200 to-gray-300 font-bold">
-              <td
-                colSpan={5}
-                className="border border-gray-400 px-2 text-right"
-              >
-                TOTAIS:
-              </td>
-              <td className="border border-gray-400 px-1 text-right">
-                {decimalParaTempo(totais.deslocamento)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right">
-                {decimalParaTempo(totais.descanso)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right">
-                {decimalParaTempo(totais.totalSemDesloc)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right">
-                {decimalParaTempo(totais.totalPago)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                {decimalParaTempo(totais.sabado)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                {decimalParaTempo(totais.domingo)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">
-                {decimalParaTempo(totais.feriado)}
-              </td>
-              <td className="border border-gray-400 px-1 text-right text-purple-600 font-bold">
-                {decimalParaTempo(totais.hhNoturno)}
-              </td>
+              <td colSpan={5} className="border border-gray-400 px-2 text-right">TOTAIS:</td>
+              <td className="border border-gray-400 px-1 text-right">{decimalParaTempo(totais.deslocamento)}</td>
+              <td className="border border-gray-400 px-1 text-right">{decimalParaTempo(totais.descanso)}</td>
+              <td className="border border-gray-400 px-1 text-right">{decimalParaTempo(totais.totalSemDesloc)}</td>
+              <td className="border border-gray-400 px-1 text-right">{decimalParaTempo(totais.totalPago)}</td>
+              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">{decimalParaTempo(totais.sabado)}</td>
+              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">{decimalParaTempo(totais.domingo)}</td>
+              <td className="border border-gray-400 px-1 text-right text-red-600 font-bold">{decimalParaTempo(totais.feriado)}</td>
+              <td className="border border-gray-400 px-1 text-right text-purple-600 font-bold">{decimalParaTempo(totais.hhNoturno)}</td>
             </tr>
           </tbody>
         </table>

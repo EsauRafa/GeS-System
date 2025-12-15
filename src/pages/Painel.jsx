@@ -1,5 +1,5 @@
 // src/pages/Painel.jsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { User, FileText, FolderKanban, Clock, TrendingUp, Award, Zap, Activity, Target, Plus, BarChart3, Users2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext.jsx';
@@ -12,16 +12,7 @@ export default function Painel() {
   const [projetos] = useLocalStorage('projetos', []);
   const navigate = useNavigate();
 
-  const [stats, setStats] = useState({
-    totalRdos: 0,
-    rdosMesAtual: 0,
-    totalHorasMes: 0,
-    totalProjetos: 0,
-    projetosAtivos: 0,
-    horasExtrasMes: 0,
-  });
-
-  useEffect(() => {
+  const stats = React.useMemo(() => {
     const hoje = new Date();
     const mesAtual = format(hoje, 'yyyy-MM');
 
@@ -36,24 +27,21 @@ export default function Painel() {
     if (rdos.length > 0) {
       rdos.forEach((rdo) => {
         if (rdo.data?.startsWith(mesAtual)) {
-          const resumo = rdo.resumoHoras || {
-            totalHorasLiquidas: 0,
-            horasExtras: 0,
-          };
+          const resumo = rdo.resumoHoras || { totalHorasLiquidas: 0, horasExtras: 0 };
           totalHorasMes += resumo.totalHorasLiquidas || 0;
           totalHorasExtras += resumo.horasExtras || 0;
         }
       });
     }
 
-    setStats({
+    return {
       totalRdos,
       rdosMesAtual,
       totalHorasMes: Math.round(totalHorasMes * 10) / 10,
       totalProjetos: projetos.length,
       projetosAtivos,
       horasExtrasMes: Math.round(totalHorasExtras * 10) / 10,
-    });
+    };
   }, [rdos, projetos]);
 
   const abrirNovoRDO = () => navigate('/rdos');
@@ -61,21 +49,20 @@ export default function Painel() {
   const gerenciarUsuarios = () => navigate('/usuarios');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-6">
+    <div className="px-3 py-4 sm:px-4 md:px-6 md:py-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* HEADER */}
-      <div className="max-w-7xl mx-auto mb-16">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center bg-white/80 backdrop-blur-xl px-8 py-4 rounded-3xl shadow-2xl border border-white/50 mb-8">
+      <div className="max-w-7xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="inline-flex items-center bg-white/80 backdrop-blur-xl px-5 sm:px-8 py-3 sm:py-4 rounded-3xl shadow-2xl border border-white/50 mb-6 sm:mb-8">
             <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse" />
-            <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-2 sm:mb-4">
               Sistema G&amp;S
             </h1>
           </div>
-          <p className="text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-base sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
             Controle total dos seus Relatórios Diários de Obra.
             <span className="font-semibold text-blue-600">
-              {' '}
-              {stats.rdosMesAtual} RDOs neste mês
+              {' '} {stats.rdosMesAtual} RDOs neste mês
             </span>
           </p>
 
@@ -111,8 +98,8 @@ export default function Painel() {
         </div>
       </div>
 
-      {/* ESTATÍSTICAS */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
+       {/* ESTATÍSTICAS */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-16">
         <div className="group bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-white/50 hover:-translate-y-2">
           <div className="flex items-center justify-between">
             <div>
@@ -193,7 +180,7 @@ export default function Painel() {
       </div>
 
       {/* CARDS DE AÇÕES */}
-      <div className="max-w-7xl mx_auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-20 sm:mb-24">
         <div className="bg-white/70 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-white/50 group hover:-translate-y-2">
           <FileText className="w-16 h-16 bg-blue-100 text-blue-600 p-4 rounded-2xl mb-6 group-hover:scale-110 transition-transform" />
           <h3 className="text-2xl font-bold text-gray-900 mb-3">RDOs Diários</h3>
@@ -242,7 +229,7 @@ export default function Painel() {
       </div>
 
       {/* BOTÕES FLUTUANTES */}
-      <div className="fixed bottom-8 right-8 space-y-4 z-50">
+      <div className="fixed bottom-6 sm:bottom-8 right-6 sm:right-8 space-y-3 sm:space-y-4 z-50">
         <button
           onClick={abrirNovoRDO}
           className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl shadow-2xl hover:shadow-3xl hover:scale-110 hover:-translate-y-1 transition-all duration-200 flex items-center justify-center text-xl font-bold"

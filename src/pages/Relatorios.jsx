@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { format, startOfMonth, endOfMonth, parseISO, isValid } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { exportRDOsToPDF } from "../utils/PDFExportRDO";
 import { Users, Calendar, Download, Filter, Clock, FileText, Shield } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+
 export default function Relatorios() {
   const { usuario } = useAuth();
-  const [rdos] = useLocalStorage("rdos", []);
-  const [projetos] = useLocalStorage("projetos", []);
-  const [usuarios] = useLocalStorage("usuarios", []);
+  const [rdos, setRdos] = useState([]);
+  const [projetos, setProjetos] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   
   const [dataInicio, setDataInicio] = useState("");
   const [dataFim, setDataFim] = useState("");
@@ -19,28 +20,93 @@ export default function Relatorios() {
   const [rdosFiltrados, setRdosFiltrados] = useState([]);
   const [isExporting, setIsExporting] = useState(false);
   const [totalHorasPeriodo, setTotalHorasPeriodo] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   // 🔐 PERMISSÃO: ID DO USUÁRIO ATUAL
   const usuarioIdAtual = usuario?.id;
 
+  // 🔧 Função para converter string numérica segura
+  const parseFloatSafe = (value) => {
+    if (value === null || value === undefined || value === '') return 0;
+    const num = parseFloat(value);
+    return isNaN(num) ? 0 : num;
+  };
+
+  // 🔧 Carregar dados do backend
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        setLoading(true);
+        
+        const [rdosRes, projetosRes, usuariosRes] = await Promise.all([
+          fetch(`${API_URL}/api/rdos`),
+          fetch(`${API_URL}/api/projetos`),
+          fetch(`${API_URL}/api/usuarios`)
+        ]);
+
+        if (!rdosRes.ok) throw new Error("Falha ao carregar RDOs");
+        if (!projetosRes.ok) throw new Error("Falha ao carregar projetos");
+        if (!usuariosRes.ok) throw new Error("Falha ao carregar usuários");
+
+        const rdosData = await rdosRes.json();
+        const projetosData = await projetosRes.json();
+        const usuariosData = await usuariosRes.json();
+
+        // 🔐 Usuário comum: só vê seus próprios RDOs
+        let rdosFiltradosPermissao = rdosData;
+        if (!usuario?.admin && usuarioIdAtual) {
+          rdosFiltradosPermissao = rdosData.filter(rdo => 
+            String(rdo.usuario_id) === String(usuarioIdAtual)
+          );
+        }
+
+        // 🔧 Normalizar dados numéricos do PostgreSQL (string -> number)
+        const rdosNormalizados = rdosFiltradosPermissao.map(rdo => ({
+          ...rdo,
+          horas_extras: parseFloatSafe(rdo.horas_extras),
+          horas_noturnas: parseFloatSafe(rdo.horas_noturnas),
+          horas_normais_por_dia: parseFloatSafe(rdo.horas_normais_por_dia),
+        }));
+
+        setRdos(rdosNormalizados);
+        setProjetos(projetosData);
+        setUsuarios(usuariosData);
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err);
+        alert("Erro ao carregar dados do relatório");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (usuario) {
+      carregarDados();
+    }
+  }, [usuario, usuarioIdAtual]);
+
   // 🔧 parseDate SEGURO
   const parseDate = (str) => {
-    if (!str || typeof str !== 'string') return null;
-    
-    let date = new Date(str + "T00:00:00");
+  if (!str || typeof str !== 'string') return null;
+  
+  // ✅ PostgreSQL ISO completo: "2025-12-18T03:00:00.000Z"
+  let date = new Date(str);
+  if (!isNaN(date.getTime()) && date.getFullYear() > 1900) {
+    // Remove timezone e pega só data local
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+  
+  // Fallback formato dd/MM/yyyy
+  const partes = str.split('/');
+  if (partes.length === 3) {
+    const dia = partes[0].padStart(2, '0');
+    const mes = partes[1].padStart(2, '0');
+    const ano = partes[2];
+    date = new Date(`${ano}-${mes}-${dia}T00:00:00`);
     if (!isNaN(date.getTime()) && date.getFullYear() > 1900) return date;
-    
-    const partes = str.split('/');
-    if (partes.length === 3) {
-      const dia = partes[0].padStart(2, '0');
-      const mes = partes[1].padStart(2, '0');
-      const ano = partes[2];
-      date = new Date(`${ano}-${mes}-${dia}T00:00:00`);
-      if (!isNaN(date.getTime()) && date.getFullYear() > 1900) return date;
-    }
-    
-    return null;
-  };
+  }
+  
+  return null;
+};
 
   const formatDateSafe = (date, formatStr = "dd/MM/yyyy") => {
     if (!date || !isValid(date)) return "—";
@@ -60,13 +126,7 @@ export default function Relatorios() {
 
   // 🔐 FILTRAGEM COM PERMISSÕES + PROJETO
   useEffect(() => {
-    // 👤 USUÁRIO COMUM: SÓ SEUS PRÓPRIOS RDOs
-    let rdosUsuarioAtual = rdos;
-    if (!usuario?.admin && usuarioIdAtual) {
-      rdosUsuarioAtual = rdos.filter(rdo => String(rdo.usuario_id) === String(usuarioIdAtual));
-    }
-
-    let filtrados = rdosUsuarioAtual.filter((rdo) => {
+    let filtrados = rdos.filter((rdo) => {
       const rdoDate = parseDate(rdo.data);
       const inicio = dataInicio ? parseISO(dataInicio) : null;
       const fim = dataFim ? parseISO(dataFim) : null;
@@ -80,7 +140,7 @@ export default function Relatorios() {
         ? true
         : (funcionarioSelecionado === "todos" || String(rdo.usuario_id) === String(funcionarioSelecionado));
 
-      // 🔧 Filtro projeto (todos / id específico)
+      // 🔧 Filtro projeto
       const projetoOk =
         projetoSelecionado === "todos" ||
         String(rdo.projeto_id) === String(projetoSelecionado);
@@ -107,7 +167,7 @@ export default function Relatorios() {
           if (isValid(start) && isValid(end)) {
             return acc + (end - start) / (1000 * 60 * 60);
           }
-        } catch {}
+        } catch { /* Ignorar horários inválidos */ }
         return acc;
       }, 0);
       return sum + totalRDO;
@@ -115,17 +175,7 @@ export default function Relatorios() {
 
     setRdosFiltrados(filtrados);
     setTotalHorasPeriodo(totalHoras);
-  }, [
-    rdos,
-    projetos,
-    usuarios,
-    dataInicio,
-    dataFim,
-    funcionarioSelecionado,
-    projetoSelecionado,
-    usuario?.admin,
-    usuarioIdAtual
-  ]);
+  }, [rdos, dataInicio, dataFim, funcionarioSelecionado, projetoSelecionado, usuario?.admin]);
 
   const encontrarProjeto = (projetoId) => {
     if (!projetoId) return { nome: "Sem projeto", cliente: "—" };
@@ -184,6 +234,17 @@ export default function Relatorios() {
 
   // 🔐 MOSTRA SELECT DE FUNCIONÁRIOS SÓ PARA ADM
   const podeVerOutrosFuncionarios = usuario?.admin === true;
+
+  if (loading) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Carregando relatórios...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
@@ -323,9 +384,9 @@ export default function Relatorios() {
             <div className="w-4 h-4 bg-emerald-500 rounded-full" />
             <div>
               <div className="text-2xl font-bold text-emerald-700">
-                {usuario?.admin ? rdos.length : rdos.filter(r => String(r.usuario_id) === String(usuarioIdAtual)).length}
+                {rdos.length}
               </div>
-              <div className="text-sm text-gray-600">Total RDOs {usuario?.admin ? '' : 'seus'}</div>
+              <div className="text-sm text-gray-600">Total RDOs</div>
             </div>
           </div>
           
@@ -355,7 +416,7 @@ export default function Relatorios() {
         </div>
       </div>
 
-      {/* TABELA - MESMA PARA AMBOS */}
+      {/* TABELA */}
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="px-8 py-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
           <div className="flex items-center justify-between">
@@ -419,7 +480,7 @@ export default function Relatorios() {
                       if (isValid(start) && isValid(end)) {
                         return sum + (end - start) / (1000 * 60 * 60);
                       }
-                    } catch {}
+                    } catch { /* Ignorar horários inválidos */ }
                     return sum;
                   }, 0) || 0;
 
@@ -430,26 +491,26 @@ export default function Relatorios() {
                       </td>
                       {podeVerOutrosFuncionarios && (
                         <td className="px-6 py-4 text-sm font-medium text-blue-600 max-w-xs truncate">
-                          {usuarioRdo?.nome || '—'}
+                          {rdo.usuario_nome || usuarioRdo.nome || '—'}
                         </td>
                       )}
                       <td className="px-6 py-4 text-sm font-medium text-gray-900 max-w-xs truncate">
-                        {projeto.nome}
+                        {rdo.projeto_nome || projeto.nome}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">
-                        {projeto.cliente}
+                        {rdo.projeto_cliente || projeto.cliente}
                       </td>
                       <td className="px-8 py-4 whitespace-nowrap text-sm font-bold text-emerald-600">
                         {totalHoras.toFixed(2)}h
                       </td>
                       <td className="px-8 py-4 whitespace-nowrap text-sm font-bold text-orange-600">
-                        {(rdo.horasExtras || 0).toFixed(1)}h
+                        {parseFloatSafe(rdo.horas_extras).toFixed(1)}h
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
                         {rdo.horarios?.length || 0}
                       </td>
                       <td className="px-6 py-4 text-sm text-purple-600 font-medium">
-                        {rdo.naturezaServico || '—'}
+                        {rdo.natureza_servico || '—'}
                       </td>
                     </tr>
                   );
