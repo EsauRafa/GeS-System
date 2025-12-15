@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Plus, Edit3, Trash2, X, User, Shield, Image as ImageIcon } from "lucide-react";
-import { useAuth } from "../contexts/AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Plus, Edit3, Trash2, X, User, Shield, Image as ImageIcon } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
 export default function UsuariosPage() {
   const { usuario, usuarios, setUsuarios } = useAuth();
@@ -11,15 +11,15 @@ export default function UsuariosPage() {
 
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-    cpf: "",
-    telefone: "",
-    cargo: "",
-    dataAdmissao: "",
+    nome: '',
+    email: '',
+    senha: '',
+    cpf: '',
+    telefone: '',
+    cargo: '',
+    dataAdmissao: '',
     jornadaDiaria: 8,
-    departamento: "",
+    departamento: '',
     admin: false,
     ativo: true,
     fotoPerfil: null,
@@ -30,7 +30,7 @@ export default function UsuariosPage() {
   // proteção admin
   useEffect(() => {
     if (!usuario?.admin) {
-      navigate("/", { replace: true });
+      navigate('/', { replace: true });
     }
   }, [usuario, navigate]);
 
@@ -39,12 +39,12 @@ export default function UsuariosPage() {
     async function carregarUsuarios() {
       try {
         const res = await fetch(`${API_URL}/api/usuarios`);
-        if (!res.ok) throw new Error("Falha ao carregar usuários");
+        if (!res.ok) throw new Error('Falha ao carregar usuários');
         const data = await res.json();
         setUsuarios(data);
       } catch (err) {
         console.error(err);
-        console.error("ALERTA AQUI", err);
+        console.error('ALERTA AQUI', err);
       }
     }
     if (usuario?.admin) {
@@ -60,11 +60,9 @@ export default function UsuariosPage() {
             <X className="w-12 h-12 text-red-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">❌ Acesso Negado</h1>
-          <p className="text-gray-600 mb-8">
-            Você não tem permissão para gerenciar usuários.
-          </p>
+          <p className="text-gray-600 mb-8">Você não tem permissão para gerenciar usuários.</p>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate('/')}
             className="w-full bg-blue-600 text-white py-3 px-6 rounded-xl hover:bg-blue-700 font-semibold transition-all shadow-lg"
           >
             Voltar ao Dashboard
@@ -79,12 +77,12 @@ export default function UsuariosPage() {
     e.preventDefault();
 
     if (!formData.nome || !formData.email || !formData.cpf) {
-      alert("❌ Nome, Email e CPF são obrigatórios!");
+      alert('❌ Nome, Email e CPF são obrigatórios!');
       return;
     }
 
     if (usuarios.find((u) => u.email === formData.email && u.id !== editingId)) {
-      alert("❌ Email já cadastrado!");
+      alert('❌ Email já cadastrado!');
       return;
     }
 
@@ -93,7 +91,7 @@ export default function UsuariosPage() {
     if (editingId) {
       const usuarioOriginal = usuarios.find((u) => u.id === editingId);
       if (!formData.senha) {
-        senhaFinal = usuarioOriginal?.senha || "";
+        senhaFinal = usuarioOriginal?.senha || '';
       }
     }
 
@@ -108,25 +106,25 @@ export default function UsuariosPage() {
       let salvo;
       if (editingId) {
         const res = await fetch(`${API_URL}/api/usuarios/${editingId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
         if (!res.ok) {
           const erroBody = await res.json().catch(() => ({}));
-          throw new Error(erroBody.error || "Erro ao atualizar usuário");
+          throw new Error(erroBody.error || 'Erro ao atualizar usuário');
         }
         salvo = await res.json();
         setUsuarios((prev) => prev.map((u) => (u.id === editingId ? salvo : u)));
       } else {
         const res = await fetch(`${API_URL}/api/usuarios`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
         if (!res.ok) {
           const erroBody = await res.json().catch(() => ({}));
-          throw new Error(erroBody.error || "Erro ao criar usuário");
+          throw new Error(erroBody.error || 'Erro ao criar usuário');
         }
         salvo = await res.json();
         setUsuarios((prev) => [salvo, ...prev]);
@@ -135,24 +133,24 @@ export default function UsuariosPage() {
       setShowForm(false);
       setEditingId(null);
       setFormData({
-        nome: "",
-        email: "",
-        senha: "",
-        cpf: "",
-        telefone: "",
-        cargo: "",
-        dataAdmissao: "",
+        nome: '',
+        email: '',
+        senha: '',
+        cpf: '',
+        telefone: '',
+        cargo: '',
+        dataAdmissao: '',
         jornadaDiaria: 8,
-        departamento: "",
+        departamento: '',
         admin: false,
         ativo: true,
         fotoPerfil: null,
       });
       setImagemPreview(null);
-      alert("✅ Usuário salvo com sucesso!");
+      alert('✅ Usuário salvo com sucesso!');
     } catch (err) {
       console.error(err);
-      alert(err.message || "Erro ao salvar usuário");
+      alert(err.message || 'Erro ao salvar usuário');
     }
   };
 
@@ -160,7 +158,7 @@ export default function UsuariosPage() {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        alert("❌ Foto deve ter no máximo 5MB!");
+        alert('❌ Foto deve ter no máximo 5MB!');
         return;
       }
 
@@ -175,15 +173,15 @@ export default function UsuariosPage() {
 
   const editarUsuario = (user) => {
     setFormData({
-      nome: user.nome || "",
-      email: user.email || "",
-      senha: user.senha || "",
-      cpf: user.cpf || "",
-      telefone: user.telefone || "",
-      cargo: user.cargo || "",
-      dataAdmissao: user.dataAdmissao || "",
+      nome: user.nome || '',
+      email: user.email || '',
+      senha: user.senha || '',
+      cpf: user.cpf || '',
+      telefone: user.telefone || '',
+      cargo: user.cargo || '',
+      dataAdmissao: user.dataAdmissao || '',
       jornadaDiaria: user.jornadaDiaria || 8,
-      departamento: user.departamento || "",
+      departamento: user.departamento || '',
       admin: user.admin || false,
       ativo: user.ativo !== false,
       fotoPerfil: user.fotoPerfil || null,
@@ -194,25 +192,25 @@ export default function UsuariosPage() {
   };
 
   const excluirUsuario = async (id) => {
-    if (!window.confirm("Tem certeza que deseja excluir este usuário?")) return;
+    if (!window.confirm('Tem certeza que deseja excluir este usuário?')) return;
 
     try {
       const res = await fetch(`${API_URL}/api/usuarios/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
       if (!res.ok && res.status !== 204) {
         const erroBody = await res.json().catch(() => ({}));
-        throw new Error(erroBody.error || "Erro ao excluir usuário");
+        throw new Error(erroBody.error || 'Erro ao excluir usuário');
       }
       setUsuarios((prev) => prev.filter((u) => u.id !== id));
       if (editingId === id) {
         setShowForm(false);
         setEditingId(null);
       }
-      alert("✅ Usuário excluído!");
+      alert('✅ Usuário excluído!');
     } catch (err) {
       console.error(err);
-      alert(err.message || "Erro ao excluir usuário");
+      alert(err.message || 'Erro ao excluir usuário');
     }
   };
 
@@ -225,8 +223,7 @@ export default function UsuariosPage() {
             👥 Gerenciar Usuários
           </h1>
           <p className="text-gray-600 mt-2">
-            Total:{" "}
-            <span className="font-bold text-emerald-600">{usuarios.length}</span> | Ativos:{" "}
+            Total: <span className="font-bold text-emerald-600">{usuarios.length}</span> | Ativos:{' '}
             <span className="font-bold text-emerald-600">
               {usuarios.filter((u) => u.ativo).length}
             </span>
@@ -237,15 +234,15 @@ export default function UsuariosPage() {
             setShowForm(true);
             setEditingId(null);
             setFormData({
-              nome: "",
-              email: "",
-              senha: "",
-              cpf: "",
-              telefone: "",
-              cargo: "",
-              dataAdmissao: "",
+              nome: '',
+              email: '',
+              senha: '',
+              cpf: '',
+              telefone: '',
+              cargo: '',
+              dataAdmissao: '',
               jornadaDiaria: 8,
-              departamento: "",
+              departamento: '',
               admin: false,
               ativo: true,
               fotoPerfil: null,
@@ -307,9 +304,7 @@ export default function UsuariosPage() {
                       </div>
                     )}
                   </td>
-                  <td className="px-6 py-4 font-semibold text-gray-900 max-w-xs">
-                    {user.nome}
-                  </td>
+                  <td className="px-6 py-4 font-semibold text-gray-900 max-w-xs">{user.nome}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div>{user.email}</div>
                     <div className="font-mono text-xs">{user.cpf}</div>
@@ -318,29 +313,27 @@ export default function UsuariosPage() {
                     <div className="font-medium">{user.cargo}</div>
                     <div className="text-xs text-gray-500">{user.departamento}</div>
                   </td>
-                  <td className="px-6 py-4 text-sm font-mono">
-                    {user.jornadaDiaria}h/dia
-                  </td>
+                  <td className="px-6 py-4 text-sm font-mono">{user.jornadaDiaria}h/dia</td>
                   <td className="px-6 py-4 text-sm">
                     <span
                       className={
                         user.admin
-                          ? "px-2 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700"
-                          : "px-2 py-1 rounded-full text-xs text-gray-600"
+                          ? 'px-2 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700'
+                          : 'px-2 py-1 rounded-full text-xs text-gray-600'
                       }
                     >
-                      {user.admin ? "Admin" : "Usuário"}
+                      {user.admin ? 'Admin' : 'Usuário'}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm whitespace-nowrap">
                     <span
                       className={`inline-flex items-center justify-center min-w-[90px] px-4 py-2 rounded-full text-xs font-bold flex-shrink-0 ${
                         user.ativo
-                          ? "bg-emerald-100 text-emerald-800 border-2 border-emerald-200"
-                          : "bg-red-100 text-red-800 border-2 border-red-200"
+                          ? 'bg-emerald-100 text-emerald-800 border-2 border-emerald-200'
+                          : 'bg-red-100 text-red-800 border-2 border-red-200'
                       }`}
                     >
-                      {user.ativo ? "✅ Ativo" : "❌ Inativo"}
+                      {user.ativo ? '✅ Ativo' : '❌ Inativo'}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
@@ -372,22 +365,22 @@ export default function UsuariosPage() {
           <div className="bg-white rounded-3xl p-8 max-w-2xl w-full mx-4 shadow-2xl max-h-[95vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                {editingId ? "✏️ Editar Usuário" : "👤 Novo Usuário"}
+                {editingId ? '✏️ Editar Usuário' : '👤 Novo Usuário'}
               </h2>
               <button
                 onClick={() => {
                   setShowForm(false);
                   setEditingId(null);
                   setFormData({
-                    nome: "",
-                    email: "",
-                    senha: "",
-                    cpf: "",
-                    telefone: "",
-                    cargo: "",
-                    dataAdmissao: "",
+                    nome: '',
+                    email: '',
+                    senha: '',
+                    cpf: '',
+                    telefone: '',
+                    cargo: '',
+                    dataAdmissao: '',
                     jornadaDiaria: 8,
-                    departamento: "",
+                    departamento: '',
                     admin: false,
                     ativo: true,
                     fotoPerfil: null,
@@ -520,9 +513,7 @@ export default function UsuariosPage() {
                   <input
                     type="text"
                     value={formData.departamento}
-                    onChange={(e) =>
-                      setFormData({ ...formData, departamento: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, departamento: e.target.value })}
                     className="w-full p-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all font-medium"
                     placeholder="TI, Desenvolvimento, RH, Projetos Elétricos, Obras..."
                   />
@@ -536,9 +527,7 @@ export default function UsuariosPage() {
                     <input
                       type="date"
                       value={formData.dataAdmissao}
-                      onChange={(e) =>
-                        setFormData({ ...formData, dataAdmissao: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, dataAdmissao: e.target.value })}
                       className="w-full p-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all"
                     />
                   </div>
@@ -582,9 +571,7 @@ export default function UsuariosPage() {
                     <input
                       type="checkbox"
                       checked={formData.ativo}
-                      onChange={(e) =>
-                        setFormData({ ...formData, ativo: e.target.checked })
-                      }
+                      onChange={(e) => setFormData({ ...formData, ativo: e.target.checked })}
                       className="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500 mr-3"
                     />
                     <span className="font-semibold text-gray-900">✅ Usuário Ativo</span>
@@ -595,9 +582,7 @@ export default function UsuariosPage() {
                       type="checkbox"
                       id="admin"
                       checked={formData.admin}
-                      onChange={(e) =>
-                        setFormData({ ...formData, admin: e.target.checked })
-                      }
+                      onChange={(e) => setFormData({ ...formData, admin: e.target.checked })}
                       className="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500 mr-3"
                     />
                     <span className="font-bold text-emerald-800 flex items-center space-x-2">
@@ -616,7 +601,7 @@ export default function UsuariosPage() {
                 className="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-5 px-8 rounded-2xl shadow-xl font-bold text-lg flex items-center justify-center space-x-3 transition-all transform hover:-translate-y-1"
               >
                 <Plus size={24} />
-                <span>{editingId ? "✏️ Atualizar Usuário" : "👤 Criar Usuário"}</span>
+                <span>{editingId ? '✏️ Atualizar Usuário' : '👤 Criar Usuário'}</span>
               </button>
               <button
                 type="button"
@@ -624,15 +609,15 @@ export default function UsuariosPage() {
                   setShowForm(false);
                   setEditingId(null);
                   setFormData({
-                    nome: "",
-                    email: "",
-                    senha: "",
-                    cpf: "",
-                    telefone: "",
-                    cargo: "",
-                    dataAdmissao: "",
+                    nome: '',
+                    email: '',
+                    senha: '',
+                    cpf: '',
+                    telefone: '',
+                    cargo: '',
+                    dataAdmissao: '',
                     jornadaDiaria: 8,
-                    departamento: "",
+                    departamento: '',
                     admin: false,
                     ativo: true,
                     fotoPerfil: null,

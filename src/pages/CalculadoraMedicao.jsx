@@ -15,9 +15,7 @@ export default function CalculadoraMedicao() {
   const [deducoes, setDeducoes] = useState(0);
 
   // Projeto selecionado
-  const projetoAtual = projetos.find(
-    (p) => String(p.id) === String(projetoSelecionado)
-  );
+  const projetoAtual = projetos.find((p) => String(p.id) === String(projetoSelecionado));
   const valorHora = Number(projetoAtual?.valorHora) || 50;
   const horasNormaisPorDiaProjeto = Number(projetoAtual?.horasNormais) || 8;
 
@@ -55,8 +53,7 @@ export default function CalculadoraMedicao() {
   const calcularHorasRDO = (rdo) => {
     // Se o RDO novo já tem resumo calculado (como você salva em RDOs.jsx)
     if (rdo.horasExtras !== undefined && rdo.horasNoturnas !== undefined) {
-      const horasNormaisDia =
-        Number(rdo.horasNormaisPorDia) || horasNormaisPorDiaProjeto;
+      const horasNormaisDia = Number(rdo.horasNormaisPorDia) || horasNormaisPorDiaProjeto;
       const extras = Number(rdo.horasExtras || 0);
       const noturnas = Number(rdo.horasNoturnas || 0);
 
@@ -64,10 +61,7 @@ export default function CalculadoraMedicao() {
       let horasDeslocamento = 0;
       (rdo.horarios || []).forEach((h) => {
         if (h.atividade === 'Deslocamento' && h.hora_inicio && h.hora_fim) {
-          horasDeslocamento += calcularDuracaoHorario(
-            h.hora_inicio,
-            h.hora_fim
-          );
+          horasDeslocamento += calcularDuracaoHorario(h.hora_inicio, h.hora_fim);
         }
       });
 
@@ -85,23 +79,16 @@ export default function CalculadoraMedicao() {
     let horasDeslocamento = 0;
 
     (rdo.horarios || []).forEach((horario) => {
-      const duracao = calcularDuracaoHorario(
-        horario.hora_inicio,
-        horario.hora_fim
-      );
+      const duracao = calcularDuracaoHorario(horario.hora_inicio, horario.hora_fim);
       totalHoras += duracao;
-      horasNoturnas += calcularHorasNoturnas(
-        horario.hora_inicio,
-        horario.hora_fim
-      );
+      horasNoturnas += calcularHorasNoturnas(horario.hora_inicio, horario.hora_fim);
 
       if (horario.atividade === 'Deslocamento') {
         horasDeslocamento += duracao;
       }
     });
 
-    const limiteDia =
-      Number(rdo.horasNormaisPorDia) || horasNormaisPorDiaProjeto;
+    const limiteDia = Number(rdo.horasNormaisPorDia) || horasNormaisPorDiaProjeto;
     const horasNormais = Math.min(totalHoras, limiteDia);
     const horasExtras = Math.max(0, totalHoras - limiteDia);
 
@@ -115,9 +102,7 @@ export default function CalculadoraMedicao() {
 
   // ✅ FILTRA RDOs POR PROJETO + PERÍODO
   const rdosFiltrados = rdos.filter((rdo) => {
-    const noProjeto =
-      !projetoSelecionado ||
-      String(rdo.projeto_id) === String(projetoSelecionado);
+    const noProjeto = !projetoSelecionado || String(rdo.projeto_id) === String(projetoSelecionado);
 
     const dataRdo = rdo.data ? new Date(rdo.data) : null;
     if (!dataRdo || Number.isNaN(dataRdo.getTime())) return false;
@@ -151,8 +136,7 @@ export default function CalculadoraMedicao() {
   const horasDeslocamento = incluirDeslocamento ? totais.desloc : 0;
   const horasNoturnas = incluirNoturno ? totais.noturnas : 0;
 
-  const horasTotais =
-    horasNormais + horasExtras + horasDeslocamento + horasNoturnas;
+  const horasTotais = horasNormais + horasExtras + horasDeslocamento + horasNoturnas;
   const medicaoBruta = horasTotais * valorHora;
   const medicaoLiquida = medicaoBruta * fatorMedicao - deducoes;
   const medicaoFinal = Math.max(0, Math.round(medicaoLiquida));
@@ -181,12 +165,8 @@ export default function CalculadoraMedicao() {
               Medição por Projeto
             </h1>
             <p className="text-xl text-gray-600 mt-1">
-              RDOs:{' '}
-              <span className="font-bold text-blue-600">{rdos.length}</span> |
-              Filtrados:{' '}
-              <span className="font-bold text-emerald-600">
-                {rdosFiltrados.length}
-              </span>
+              RDOs: <span className="font-bold text-blue-600">{rdos.length}</span> | Filtrados:{' '}
+              <span className="font-bold text-emerald-600">{rdosFiltrados.length}</span>
             </p>
           </div>
         </div>
@@ -194,33 +174,22 @@ export default function CalculadoraMedicao() {
         {/* RESUMO / DEBUG */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-200">
           <div>
-            <h3 className="font-bold text-lg text-blue-800 mb-2">
-              📊 Horas Calculadas
-            </h3>
+            <h3 className="font-bold text-lg text-blue-800 mb-2">📊 Horas Calculadas</h3>
             <div className="space-y-1 text-sm">
               <div>
                 Normais:{' '}
-                <span className="font-bold text-blue-600">
-                  {totais.normais.toFixed(1)}h
-                </span>
+                <span className="font-bold text-blue-600">{totais.normais.toFixed(1)}h</span>
               </div>
               <div>
-                HE:{' '}
-                <span className="font-bold text-orange-600">
-                  {totais.extras.toFixed(1)}h
-                </span>
+                HE: <span className="font-bold text-orange-600">{totais.extras.toFixed(1)}h</span>
               </div>
               <div>
                 Desloc:{' '}
-                <span className="font-bold text-purple-600">
-                  {totais.desloc.toFixed(1)}h
-                </span>
+                <span className="font-bold text-purple-600">{totais.desloc.toFixed(1)}h</span>
               </div>
               <div>
                 Noturno:{' '}
-                <span className="font-bold text-indigo-600">
-                  {totais.noturnas.toFixed(1)}h
-                </span>
+                <span className="font-bold text-indigo-600">{totais.noturnas.toFixed(1)}h</span>
               </div>
               <div className="font-bold text-2xl text-emerald-700 pt-2 border-t">
                 {horasTotais.toFixed(1)}h TOTAL
@@ -228,41 +197,28 @@ export default function CalculadoraMedicao() {
             </div>
           </div>
           <div>
-            <h3 className="font-bold text-lg text-blue-800 mb-2">
-              🎯 Configuração
-            </h3>
+            <h3 className="font-bold text-lg text-blue-800 mb-2">🎯 Configuração</h3>
             <div className="space-y-1 text-sm">
               <div>
-                Projeto:{' '}
-                <span className="font-bold">
-                  {projetoAtual?.nome || 'Todos'}
-                </span>
+                Projeto: <span className="font-bold">{projetoAtual?.nome || 'Todos'}</span>
               </div>
               <div>
                 Normal/Dia:{' '}
-                <span className="font-bold text-orange-600">
-                  {horasNormaisPorDiaProjeto}h
-                </span>
+                <span className="font-bold text-orange-600">{horasNormaisPorDiaProjeto}h</span>
               </div>
               <div>
-                Valor:{' '}
-                <span className="font-bold text-emerald-700">
-                  R$ {valorHora.toFixed(2)}
-                </span>
+                Valor: <span className="font-bold text-emerald-700">R$ {valorHora.toFixed(2)}</span>
               </div>
             </div>
           </div>
           <div>
-            <h3 className="font-bold text-lg text-blue-800 mb-2">
-              📅 Período
-            </h3>
+            <h3 className="font-bold text-lg text-blue-800 mb-2">📅 Período</h3>
             <div className="space-y-1 text-sm">
               <div>
                 {dataInicio} → {dataFim}
               </div>
               <div>
-                Fator:{' '}
-                <span className="font-bold">×{fatorMedicao.toFixed(2)}</span>
+                Fator: <span className="font-bold">×{fatorMedicao.toFixed(2)}</span>
               </div>
               <div>
                 Deduções:{' '}
@@ -277,9 +233,7 @@ export default function CalculadoraMedicao() {
         {/* PROJETO + VALOR */}
         <div className="grid lg:grid-cols-2 gap-8 mb-8">
           <div>
-            <label className="block text-lg font-bold text-gray-800 mb-4">
-              🏗️ Projeto
-            </label>
+            <label className="block text-lg font-bold text-gray-800 mb-4">🏗️ Projeto</label>
             <select
               className="w-full p-5 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500 text-lg font-semibold"
               value={projetoSelecionado}
@@ -288,23 +242,20 @@ export default function CalculadoraMedicao() {
               <option value="">📋 Todos os Projetos</option>
               {projetos.map((proj) => (
                 <option key={proj.id} value={proj.id}>
-                  {proj.nome} - {proj.cliente} ({proj.horasNormais}h/dia, R${' '}
-                  {proj.valorHora}/h)
+                  {proj.nome} - {proj.cliente} ({proj.horasNormais}h/dia, R$ {proj.valorHora}/h)
                 </option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-lg font-bold text-gray-800 mb-4">
-              💰 Valor Hora
-            </label>
+            <label className="block text-lg font-bold text-gray-800 mb-4">💰 Valor Hora</label>
             <div className="p-6 bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-2xl text-center">
               <div className="text-3xl font-black text-emerald-700">
                 R$ {valorHora.toFixed(2)}/h
               </div>
               <div className="text-sm text-emerald-600 font-medium">
-                {projetoAtual?.nome || 'Sem projeto selecionado'} (
-                {horasNormaisPorDiaProjeto}h normal)
+                {projetoAtual?.nome || 'Sem projeto selecionado'} ({horasNormaisPorDiaProjeto}h
+                normal)
               </div>
             </div>
           </div>
@@ -341,9 +292,7 @@ export default function CalculadoraMedicao() {
             />
           </div>
           <div>
-            <label className="block font-semibold mb-2">
-              ➖ Deduções (R$)
-            </label>
+            <label className="block font-semibold mb-2">➖ Deduções (R$)</label>
             <input
               type="number"
               className="w-full p-4 border-2 rounded-xl focus:ring-4 focus:ring-red-500 text-center text-lg"
@@ -365,8 +314,7 @@ export default function CalculadoraMedicao() {
             <div>
               <div className="font-bold text-blue-800">⏰ Horas Extras</div>
               <div className="text-xs text-blue-600">
-                Normais: {totais.normais.toFixed(1)}h | HE:{' '}
-                {totais.extras.toFixed(1)}h
+                Normais: {totais.normais.toFixed(1)}h | HE: {totais.extras.toFixed(1)}h
               </div>
             </div>
           </label>
@@ -380,9 +328,7 @@ export default function CalculadoraMedicao() {
             />
             <div>
               <div className="font-bold text-purple-800">🚗 Deslocamento</div>
-              <div className="text-xs text-purple-600">
-                {totais.desloc.toFixed(1)}h
-              </div>
+              <div className="text-xs text-purple-600">{totais.desloc.toFixed(1)}h</div>
             </div>
           </label>
 
@@ -394,12 +340,8 @@ export default function CalculadoraMedicao() {
               onChange={(e) => setIncluirNoturno(e.target.checked)}
             />
             <div>
-              <div className="font-bold text-indigo-800">
-                🌙 Noturno (22h-6h)
-              </div>
-              <div className="text-xs text-indigo-600">
-                {totais.noturnas.toFixed(1)}h
-              </div>
+              <div className="font-bold text-indigo-800">🌙 Noturno (22h-6h)</div>
+              <div className="text-xs text-indigo-600">{totais.noturnas.toFixed(1)}h</div>
             </div>
           </label>
 
@@ -412,40 +354,29 @@ export default function CalculadoraMedicao() {
             />
             <div>
               <div className="font-bold text-emerald-800">📊 Total Usado</div>
-              <div className="text-xs text-emerald-600 font-bold">
-                {horasTotais.toFixed(1)}h
-              </div>
+              <div className="text-xs text-emerald-600 font-bold">{horasTotais.toFixed(1)}h</div>
             </div>
           </label>
         </div>
 
         {/* RESULTADO FINAL */}
         <div className="bg-gradient-to-r from-emerald-500 via-teal-600 to-emerald-700 text-white p-12 rounded-3xl shadow-2xl text-center mb-12">
-          <h2 className="text-4xl font-black mb-6 tracking-tight">
-            MEDIÇÃO FINAL
-          </h2>
+          <h2 className="text-4xl font-black mb-6 tracking-tight">MEDIÇÃO FINAL</h2>
           <div className="text-6xl font-black mb-6 drop-shadow-2xl">
-            {medicaoFinal.toLocaleString('pt-BR')}{' '}
-            <span className="text-4xl">R$</span>
+            {medicaoFinal.toLocaleString('pt-BR')} <span className="text-4xl">R$</span>
           </div>
 
           <div className="grid md:grid-cols-5 gap-8 text-lg">
             <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-4xl font-black text-blue-100">
-                {rdosFiltrados.length}
-              </div>
+              <div className="text-4xl font-black text-blue-100">{rdosFiltrados.length}</div>
               <div className="opacity-90">Dias</div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-3xl font-black text-blue-100">
-                {horasNormais.toFixed(1)}h
-              </div>
+              <div className="text-3xl font-black text-blue-100">{horasNormais.toFixed(1)}h</div>
               <div className="opacity-90">Normais</div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-3xl font-black text-orange-100">
-                {horasExtras.toFixed(1)}h
-              </div>
+              <div className="text-3xl font-black text-orange-100">{horasExtras.toFixed(1)}h</div>
               <div className="opacity-90">HE</div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
@@ -455,9 +386,7 @@ export default function CalculadoraMedicao() {
               <div className="opacity-90">Desloc.</div>
             </div>
             <div className="bg-white/20 backdrop-blur-sm p-6 rounded-2xl">
-              <div className="text-3xl font-black text-indigo-100">
-                {horasNoturnas.toFixed(1)}h
-              </div>
+              <div className="text-3xl font-black text-indigo-100">{horasNoturnas.toFixed(1)}h</div>
               <div className="opacity-90">Noturno</div>
             </div>
           </div>

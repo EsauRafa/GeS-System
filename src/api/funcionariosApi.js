@@ -1,6 +1,6 @@
 let funcionarios = [
-  { id: 1, nome: "João Silva", cargo: "Engenheiro", status: "ativo" },
-  { id: 2, nome: "Maria Santos", cargo: "Técnica", status: "ativo" }
+  { id: 1, nome: 'João Silva', cargo: 'Engenheiro', status: 'ativo' },
+  { id: 2, nome: 'Maria Santos', cargo: 'Técnica', status: 'ativo' },
 ];
 
 export const funcionariosApi = {
@@ -11,7 +11,7 @@ export const funcionariosApi = {
     return Promise.resolve(funcionario);
   },
   delete: (id) => {
-    funcionarios = funcionarios.filter(f => f.id !== id);
+    funcionarios = funcionarios.filter((f) => f.id !== id);
     return Promise.resolve(true);
-  }
+  },
 };

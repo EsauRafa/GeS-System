@@ -62,9 +62,7 @@ const MenuLateral = () => {
             end
             className={({ isActive }) =>
               `flex items-center space-x-3 p-2.5 sm:p-3 rounded-xl w-full transition-all font-medium block ${
-                isActive
-                  ? 'bg-blue-400 text-white shadow-md'
-                  : 'hover:bg-blue-500 text-blue-100'
+                isActive ? 'bg-blue-400 text-white shadow-md' : 'hover:bg-blue-500 text-blue-100'
               }`
             }
           >
@@ -82,11 +80,7 @@ const MenuLateral = () => {
               <FileText size={18} />
               <span>RDOs</span>
             </span>
-            <span
-              className={`transform transition-transform ${
-                openRdoMenu ? 'rotate-90' : ''
-              }`}
-            >
+            <span className={`transform transition-transform ${openRdoMenu ? 'rotate-90' : ''}`}>
               ▶
             </span>
           </button>
@@ -147,11 +141,7 @@ const MenuLateral = () => {
               <Settings size={18} />
               <span>Configurações Gerais</span>
             </span>
-            <span
-              className={`transform transition-transform ${
-                openConfigMenu ? 'rotate-90' : ''
-              }`}
-            >
+            <span className={`transform transition-transform ${openConfigMenu ? 'rotate-90' : ''}`}>
               ▶
             </span>
           </button>
@@ -289,10 +279,7 @@ const LayoutPrincipal = ({ children }) => {
           <div className="w-64 h-full">
             <MenuLateral />
           </div>
-          <div
-            className="flex-1 bg-black/40"
-            onClick={() => setMenuAberto(false)}
-          />
+          <div className="flex-1 bg-black/40" onClick={() => setMenuAberto(false)} />
         </div>
       )}
 

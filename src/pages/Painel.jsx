@@ -1,7 +1,20 @@
 // src/pages/Painel.jsx
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { User, FileText, FolderKanban, Clock, TrendingUp, Award, Zap, Activity, Target, Plus, BarChart3, Users2 } from 'lucide-react';
+import {
+  User,
+  FileText,
+  FolderKanban,
+  Clock,
+  TrendingUp,
+  Award,
+  Zap,
+  Activity,
+  Target,
+  Plus,
+  BarChart3,
+  Users2,
+} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { format } from 'date-fns';
@@ -62,7 +75,8 @@ export default function Painel() {
           <p className="text-base sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto mb-6 sm:mb-8 leading-relaxed">
             Controle total dos seus Relatórios Diários de Obra.
             <span className="font-semibold text-blue-600">
-              {' '} {stats.rdosMesAtual} RDOs neste mês
+              {' '}
+              {stats.rdosMesAtual} RDOs neste mês
             </span>
           </p>
 
@@ -82,9 +96,7 @@ export default function Painel() {
               )}
 
               <div>
-                <div className="font-bold text-emerald-700">
-                  {usuario?.nome}
-                </div>
+                <div className="font-bold text-emerald-700">{usuario?.nome}</div>
                 <div className="text-xs text-gray-600">{usuario?.email}</div>
               </div>
             </div>
@@ -98,14 +110,12 @@ export default function Painel() {
         </div>
       </div>
 
-       {/* ESTATÍSTICAS */}
+      {/* ESTATÍSTICAS */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-16">
         <div className="group bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-white/50 hover:-translate-y-2">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 mb-1">
-                RDOs Totais
-              </p>
+              <p className="text-sm font-medium text-gray-600 mb-1">RDOs Totais</p>
               <p className="text-4xl font-black text-gray-900">
                 {stats.totalRdos.toLocaleString()}
               </p>
@@ -123,20 +133,14 @@ export default function Painel() {
         <div className="group bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-white/50 hover:-translate-y-2">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 mb-1">
-                Horas Trabalhadas
-              </p>
-              <p className="text-4xl font-black text-gray-900">
-                {stats.totalHorasMes}h
-              </p>
+              <p className="text-sm font-medium text-gray-600 mb-1">Horas Trabalhadas</p>
+              <p className="text-4xl font-black text-gray-900">{stats.totalHorasMes}h</p>
             </div>
             <Clock className="w-16 h-16 text-yellow-500 opacity-75 group-hover:opacity-100 transition-all" />
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-orange-600 font-semibold">
-                {stats.horasExtrasMes}h
-              </span>
+              <span className="text-orange-600 font-semibold">{stats.horasExtrasMes}h</span>
               <span className="text-emerald-600">Horas Extras</span>
             </div>
           </div>
@@ -146,9 +150,7 @@ export default function Painel() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 mb-1">Projetos</p>
-              <p className="text-4xl font-black text-gray-900">
-                {stats.totalProjetos}
-              </p>
+              <p className="text-4xl font-black text-gray-900">{stats.totalProjetos}</p>
             </div>
             <FolderKanban className="w-16 h-16 text-indigo-500 opacity-75 group-hover:opacity-100 transition-all" />
           </div>
@@ -162,9 +164,7 @@ export default function Painel() {
         <div className="group bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all border-0 hover:-translate-y-2 lg:col-span-2 xl:col-span-1">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-lg font-medium opacity-90 mb-2">
-                Próximo RDO
-              </p>
+              <p className="text-lg font-medium opacity-90 mb-2">Próximo RDO</p>
               <p className="text-3xl font-black mb-1">Hoje</p>
               <p className="text-emerald-100 text-sm">08:00 - 17:00</p>
             </div>
@@ -185,8 +185,7 @@ export default function Painel() {
           <FileText className="w-16 h-16 bg-blue-100 text-blue-600 p-4 rounded-2xl mb-6 group-hover:scale-110 transition-transform" />
           <h3 className="text-2xl font-bold text-gray-900 mb-3">RDOs Diários</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            Crie e gerencie seus relatórios diários com controle de horas,
-            atividades e fotos
+            Crie e gerencie seus relatórios diários com controle de horas, atividades e fotos
           </p>
           <NavLink
             to="/rdos"
@@ -200,8 +199,7 @@ export default function Painel() {
           <FolderKanban className="w-16 h-16 bg-indigo-100 text-indigo-600 p-4 rounded-2xl mb-6 group-hover:scale-110 transition-transform" />
           <h3 className="text-2xl font-bold text-gray-900 mb-3">Projetos</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
-            Gerencie todos os seus projetos e configure horas normais por
-            projeto
+            Gerencie todos os seus projetos e configure horas normais por projeto
           </p>
           <NavLink
             to="/projetos"
@@ -213,9 +211,7 @@ export default function Painel() {
 
         <div className="bg-white/70 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-white/50 group hover:-translate-y-2">
           <Clock className="w-16 h-16 bg-yellow-100 text-yellow-600 p-4 rounded-2xl mb-6 group-hover:scale-110 transition-transform" />
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">
-            Ficha Técnica
-          </h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">Ficha Técnica</h3>
           <p className="text-gray-600 mb-6 leading-relaxed">
             Controle mensal completo com horas extras, noturnas e sábados
           </p>

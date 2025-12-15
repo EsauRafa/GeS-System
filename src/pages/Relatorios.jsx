@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
-import { format, startOfMonth, endOfMonth, parseISO, isValid } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { exportRDOsToPDF } from "../utils/PDFExportRDO";
+import { format, startOfMonth, endOfMonth, parseISO, isValid } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { exportRDOsToPDF } from '../utils/PDFExportRDO';
 import { Users, Calendar, Download, Filter, Clock, FileText, Shield } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:4000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
 
 export default function Relatorios() {
   const { usuario } = useAuth();
   const [rdos, setRdos] = useState([]);
   const [projetos, setProjetos] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
-  
-  const [dataInicio, setDataInicio] = useState("");
-  const [dataFim, setDataFim] = useState("");
-  const [funcionarioSelecionado, setFuncionarioSelecionado] = useState("todos");
-  const [projetoSelecionado, setProjetoSelecionado] = useState("todos");
+
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
+  const [funcionarioSelecionado, setFuncionarioSelecionado] = useState('todos');
+  const [projetoSelecionado, setProjetoSelecionado] = useState('todos');
   const [rdosFiltrados, setRdosFiltrados] = useState([]);
   const [isExporting, setIsExporting] = useState(false);
   const [totalHorasPeriodo, setTotalHorasPeriodo] = useState(0);
@@ -37,16 +37,16 @@ export default function Relatorios() {
     async function carregarDados() {
       try {
         setLoading(true);
-        
+
         const [rdosRes, projetosRes, usuariosRes] = await Promise.all([
           fetch(`${API_URL}/api/rdos`),
           fetch(`${API_URL}/api/projetos`),
-          fetch(`${API_URL}/api/usuarios`)
+          fetch(`${API_URL}/api/usuarios`),
         ]);
 
-        if (!rdosRes.ok) throw new Error("Falha ao carregar RDOs");
-        if (!projetosRes.ok) throw new Error("Falha ao carregar projetos");
-        if (!usuariosRes.ok) throw new Error("Falha ao carregar usuários");
+        if (!rdosRes.ok) throw new Error('Falha ao carregar RDOs');
+        if (!projetosRes.ok) throw new Error('Falha ao carregar projetos');
+        if (!usuariosRes.ok) throw new Error('Falha ao carregar usuários');
 
         const rdosData = await rdosRes.json();
         const projetosData = await projetosRes.json();
@@ -55,13 +55,13 @@ export default function Relatorios() {
         // 🔐 Usuário comum: só vê seus próprios RDOs
         let rdosFiltradosPermissao = rdosData;
         if (!usuario?.admin && usuarioIdAtual) {
-          rdosFiltradosPermissao = rdosData.filter(rdo => 
-            String(rdo.usuario_id) === String(usuarioIdAtual)
+          rdosFiltradosPermissao = rdosData.filter(
+            (rdo) => String(rdo.usuario_id) === String(usuarioIdAtual)
           );
         }
 
         // 🔧 Normalizar dados numéricos do PostgreSQL (string -> number)
-        const rdosNormalizados = rdosFiltradosPermissao.map(rdo => ({
+        const rdosNormalizados = rdosFiltradosPermissao.map((rdo) => ({
           ...rdo,
           horas_extras: parseFloatSafe(rdo.horas_extras),
           horas_noturnas: parseFloatSafe(rdo.horas_noturnas),
@@ -72,8 +72,8 @@ export default function Relatorios() {
         setProjetos(projetosData);
         setUsuarios(usuariosData);
       } catch (err) {
-        console.error("Erro ao carregar dados:", err);
-        alert("Erro ao carregar dados do relatório");
+        console.error('Erro ao carregar dados:', err);
+        alert('Erro ao carregar dados do relatório');
       } finally {
         setLoading(false);
       }
@@ -86,42 +86,42 @@ export default function Relatorios() {
 
   // 🔧 parseDate SEGURO
   const parseDate = (str) => {
-  if (!str || typeof str !== 'string') return null;
-  
-  // ✅ PostgreSQL ISO completo: "2025-12-18T03:00:00.000Z"
-  let date = new Date(str);
-  if (!isNaN(date.getTime()) && date.getFullYear() > 1900) {
-    // Remove timezone e pega só data local
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  }
-  
-  // Fallback formato dd/MM/yyyy
-  const partes = str.split('/');
-  if (partes.length === 3) {
-    const dia = partes[0].padStart(2, '0');
-    const mes = partes[1].padStart(2, '0');
-    const ano = partes[2];
-    date = new Date(`${ano}-${mes}-${dia}T00:00:00`);
-    if (!isNaN(date.getTime()) && date.getFullYear() > 1900) return date;
-  }
-  
-  return null;
-};
+    if (!str || typeof str !== 'string') return null;
 
-  const formatDateSafe = (date, formatStr = "dd/MM/yyyy") => {
-    if (!date || !isValid(date)) return "—";
+    // ✅ PostgreSQL ISO completo: "2025-12-18T03:00:00.000Z"
+    let date = new Date(str);
+    if (!isNaN(date.getTime()) && date.getFullYear() > 1900) {
+      // Remove timezone e pega só data local
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
+
+    // Fallback formato dd/MM/yyyy
+    const partes = str.split('/');
+    if (partes.length === 3) {
+      const dia = partes[0].padStart(2, '0');
+      const mes = partes[1].padStart(2, '0');
+      const ano = partes[2];
+      date = new Date(`${ano}-${mes}-${dia}T00:00:00`);
+      if (!isNaN(date.getTime()) && date.getFullYear() > 1900) return date;
+    }
+
+    return null;
+  };
+
+  const formatDateSafe = (date, formatStr = 'dd/MM/yyyy') => {
+    if (!date || !isValid(date)) return '—';
     try {
       return format(date, formatStr, { locale: ptBR });
     } catch {
-      return "—";
+      return '—';
     }
   };
 
   // Inicialização datas
   useEffect(() => {
     const hoje = new Date();
-    setDataInicio(format(startOfMonth(hoje), "yyyy-MM-dd"));
-    setDataFim(format(endOfMonth(hoje), "yyyy-MM-dd"));
+    setDataInicio(format(startOfMonth(hoje), 'yyyy-MM-dd'));
+    setDataFim(format(endOfMonth(hoje), 'yyyy-MM-dd'));
   }, []);
 
   // 🔐 FILTRAGEM COM PERMISSÕES + PROJETO
@@ -130,20 +130,19 @@ export default function Relatorios() {
       const rdoDate = parseDate(rdo.data);
       const inicio = dataInicio ? parseISO(dataInicio) : null;
       const fim = dataFim ? parseISO(dataFim) : null;
-      
+
       const dataOk =
-        (!inicio || !rdoDate || rdoDate >= inicio) &&
-        (!fim || !rdoDate || rdoDate <= fim);
+        (!inicio || !rdoDate || rdoDate >= inicio) && (!fim || !rdoDate || rdoDate <= fim);
 
       // 🔐 Filtro funcionário (apenas admin)
       const funcionarioOk = !usuario?.admin
         ? true
-        : (funcionarioSelecionado === "todos" || String(rdo.usuario_id) === String(funcionarioSelecionado));
+        : funcionarioSelecionado === 'todos' ||
+          String(rdo.usuario_id) === String(funcionarioSelecionado);
 
       // 🔧 Filtro projeto
       const projetoOk =
-        projetoSelecionado === "todos" ||
-        String(rdo.projeto_id) === String(projetoSelecionado);
+        projetoSelecionado === 'todos' || String(rdo.projeto_id) === String(projetoSelecionado);
 
       return dataOk && funcionarioOk && projetoOk;
     });
@@ -158,7 +157,7 @@ export default function Relatorios() {
     // Cálculo total horas SEGURO
     const totalHoras = filtrados.reduce((sum, rdo) => {
       if (!rdo.horarios?.length) return sum;
-      
+
       const totalRDO = rdo.horarios.reduce((acc, h) => {
         if (!h.hora_inicio || !h.hora_fim) return acc;
         try {
@@ -167,7 +166,9 @@ export default function Relatorios() {
           if (isValid(start) && isValid(end)) {
             return acc + (end - start) / (1000 * 60 * 60);
           }
-        } catch { /* Ignorar horários inválidos */ }
+        } catch {
+          /* Ignorar horários inválidos */
+        }
         return acc;
       }, 0);
       return sum + totalRDO;
@@ -178,27 +179,27 @@ export default function Relatorios() {
   }, [rdos, dataInicio, dataFim, funcionarioSelecionado, projetoSelecionado, usuario?.admin]);
 
   const encontrarProjeto = (projetoId) => {
-    if (!projetoId) return { nome: "Sem projeto", cliente: "—" };
+    if (!projetoId) return { nome: 'Sem projeto', cliente: '—' };
     return (
       projetos.find((p) => String(p.id) === String(projetoId)) || {
-        nome: "Projeto não encontrado",
-        cliente: "—",
+        nome: 'Projeto não encontrado',
+        cliente: '—',
       }
     );
   };
 
   const encontrarUsuario = (usuarioId) => {
-    if (!usuarioId) return { nome: "Usuário desconhecido" };
+    if (!usuarioId) return { nome: 'Usuário desconhecido' };
     return (
       usuarios.find((u) => String(u.id) === String(usuarioId)) || {
-        nome: "Usuário não encontrado",
+        nome: 'Usuário não encontrado',
       }
     );
   };
 
   const handleExportPDF = async () => {
     if (rdosFiltrados.length === 0) {
-      alert("❌ Nenhum RDO no período selecionado!");
+      alert('❌ Nenhum RDO no período selecionado!');
       return;
     }
 
@@ -206,18 +207,16 @@ export default function Relatorios() {
     setTimeout(() => {
       try {
         const nomeFuncionario =
-          funcionarioSelecionado === "todos"
+          funcionarioSelecionado === 'todos'
             ? usuario?.admin
-              ? "Todos_Funcionarios"
-              : usuario?.nome?.replace(/[^a-zA-Z0-9]/g, "_")
-            : encontrarUsuario(funcionarioSelecionado)?.nome?.replace(
-                /[^a-zA-Z0-9]/g,
-                "_"
-              ) || "Relatorio";
-        exportRDOsToPDF(rdosFiltrados, projetos, "/logo.png", nomeFuncionario);
+              ? 'Todos_Funcionarios'
+              : usuario?.nome?.replace(/[^a-zA-Z0-9]/g, '_')
+            : encontrarUsuario(funcionarioSelecionado)?.nome?.replace(/[^a-zA-Z0-9]/g, '_') ||
+              'Relatorio';
+        exportRDOsToPDF(rdosFiltrados, projetos, '/logo.png', nomeFuncionario);
       } catch (error) {
-        console.error("Erro PDF:", error);
-        alert("Erro ao gerar PDF");
+        console.error('Erro PDF:', error);
+        alert('Erro ao gerar PDF');
       } finally {
         setIsExporting(false);
       }
@@ -226,10 +225,10 @@ export default function Relatorios() {
 
   const limparFiltros = () => {
     const hoje = new Date();
-    setDataInicio(format(startOfMonth(hoje), "yyyy-MM-dd"));
-    setDataFim(format(endOfMonth(hoje), "yyyy-MM-dd"));
-    setFuncionarioSelecionado("todos");
-    setProjetoSelecionado("todos");
+    setDataInicio(format(startOfMonth(hoje), 'yyyy-MM-dd'));
+    setDataFim(format(endOfMonth(hoje), 'yyyy-MM-dd'));
+    setFuncionarioSelecionado('todos');
+    setProjetoSelecionado('todos');
   };
 
   // 🔐 MOSTRA SELECT DE FUNCIONÁRIOS SÓ PARA ADM
@@ -264,8 +263,8 @@ export default function Relatorios() {
           </div>
           <p className="text-gray-600">
             {podeVerOutrosFuncionarios
-              ? "👥 Admin: Veja RDOs de todos os funcionários"
-              : `👤 ${usuario?.nome || "Usuário"}: Seus RDOs pessoais`}
+              ? '👥 Admin: Veja RDOs de todos os funcionários'
+              : `👤 ${usuario?.nome || 'Usuário'}: Seus RDOs pessoais`}
           </p>
         </div>
 
@@ -358,9 +357,7 @@ export default function Relatorios() {
                 onChange={(e) => setFuncionarioSelecionado(e.target.value)}
                 className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               >
-                <option value="todos">
-                  👥 Todos os Funcionários ({rdos.length} RDOs)
-                </option>
+                <option value="todos">👥 Todos os Funcionários ({rdos.length} RDOs)</option>
                 {usuarios
                   .filter((u) => u.ativo !== false)
                   .map((user) => {
@@ -383,13 +380,11 @@ export default function Relatorios() {
           <div className="flex items-center space-x-3 p-4 bg-white rounded-xl shadow-sm">
             <div className="w-4 h-4 bg-emerald-500 rounded-full" />
             <div>
-              <div className="text-2xl font-bold text-emerald-700">
-                {rdos.length}
-              </div>
+              <div className="text-2xl font-bold text-emerald-700">{rdos.length}</div>
               <div className="text-sm text-gray-600">Total RDOs</div>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3 p-4 bg-white rounded-xl shadow-sm">
             <div className="w-4 h-4 bg-blue-500 rounded-full" />
             <div>
@@ -397,19 +392,23 @@ export default function Relatorios() {
               <div className="text-sm text-gray-600">Filtrados</div>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3 p-4 bg-white rounded-xl shadow-sm">
             <div className="w-4 h-4 bg-purple-500 rounded-full" />
             <div>
-              <div className="text-2xl font-bold text-purple-700">{totalHorasPeriodo.toFixed(1)}h</div>
+              <div className="text-2xl font-bold text-purple-700">
+                {totalHorasPeriodo.toFixed(1)}h
+              </div>
               <div className="text-sm text-gray-600">Total Horas</div>
             </div>
           </div>
-          
+
           <div className="flex items-center space-x-3 p-4 bg-white rounded-xl shadow-sm">
             <div className="w-4 h-4 bg-orange-500 rounded-full" />
             <div>
-              <div className="text-2xl font-bold text-orange-700">{usuarios.filter(u => u.ativo !== false).length}</div>
+              <div className="text-2xl font-bold text-orange-700">
+                {usuarios.filter((u) => u.ativo !== false).length}
+              </div>
               <div className="text-sm text-gray-600">Funcionários</div>
             </div>
           </div>
@@ -426,11 +425,13 @@ export default function Relatorios() {
                 <span>RDOs do Período</span>
               </h2>
               <p className="text-blue-100">
-                {podeVerOutrosFuncionarios && funcionarioSelecionado === "todos" 
+                {podeVerOutrosFuncionarios && funcionarioSelecionado === 'todos'
                   ? `${formatDateSafe(parseISO(dataInicio))} a ${formatDateSafe(parseISO(dataFim))}`
-                  : podeVerOutrosFuncionarios 
-                    ? `Funcionário: ${encontrarUsuario(funcionarioSelecionado)?.nome}`
-                    : `${usuario?.nome || 'Você'}: ${formatDateSafe(parseISO(dataInicio))} a ${formatDateSafe(parseISO(dataFim))}`}
+                  : podeVerOutrosFuncionarios
+                  ? `Funcionário: ${encontrarUsuario(funcionarioSelecionado)?.nome}`
+                  : `${usuario?.nome || 'Você'}: ${formatDateSafe(
+                      parseISO(dataInicio)
+                    )} a ${formatDateSafe(parseISO(dataFim))}`}
               </p>
             </div>
             <div className="text-right">
@@ -445,8 +446,8 @@ export default function Relatorios() {
             <div className="text-6xl mb-6 opacity-25">📋</div>
             <h3 className="text-2xl font-bold text-gray-600 mb-2">Nenhum RDO encontrado</h3>
             <p className="text-gray-500 mb-6">
-              {podeVerOutrosFuncionarios 
-                ? "Ajuste os filtros ou crie novos RDOs em /rdos"
+              {podeVerOutrosFuncionarios
+                ? 'Ajuste os filtros ou crie novos RDOs em /rdos'
                 : `Você ainda não tem RDOs neste período. Crie em <strong>/rdos</strong>`}
             </p>
           </div>
@@ -455,34 +456,53 @@ export default function Relatorios() {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Data</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Data
+                  </th>
                   {podeVerOutrosFuncionarios && (
-                    <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Funcionário</th>
+                    <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                      Funcionário
+                    </th>
                   )}
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Projeto</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Cliente</th>
-                  <th className="px-8 py-4 text-left text-xs font-bold uppercase text-gray-600">Horas</th>
-                  <th className="px-8 py-4 text-left text-xs font-bold uppercase text-gray-600">HE</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Horários</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">Natureza</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Projeto
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Cliente
+                  </th>
+                  <th className="px-8 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Horas
+                  </th>
+                  <th className="px-8 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    HE
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Horários
+                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-bold uppercase text-gray-600">
+                    Natureza
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {rdosFiltrados.map((rdo) => {
                   const projeto = encontrarProjeto(rdo.projeto_id);
                   const usuarioRdo = encontrarUsuario(rdo.usuario_id);
-                  
-                  const totalHoras = rdo.horarios?.reduce((sum, h) => {
-                    if (!h.hora_inicio || !h.hora_fim) return sum;
-                    try {
-                      const start = new Date(`1970-01-01T${h.hora_inicio}`);
-                      const end = new Date(`1970-01-01T${h.hora_fim}`);
-                      if (isValid(start) && isValid(end)) {
-                        return sum + (end - start) / (1000 * 60 * 60);
+
+                  const totalHoras =
+                    rdo.horarios?.reduce((sum, h) => {
+                      if (!h.hora_inicio || !h.hora_fim) return sum;
+                      try {
+                        const start = new Date(`1970-01-01T${h.hora_inicio}`);
+                        const end = new Date(`1970-01-01T${h.hora_fim}`);
+                        if (isValid(start) && isValid(end)) {
+                          return sum + (end - start) / (1000 * 60 * 60);
+                        }
+                      } catch {
+                        /* Ignorar horários inválidos */
                       }
-                    } catch { /* Ignorar horários inválidos */ }
-                    return sum;
-                  }, 0) || 0;
+                      return sum;
+                    }, 0) || 0;
 
                   return (
                     <tr key={rdo.id} className="hover:bg-gray-50 transition-colors">

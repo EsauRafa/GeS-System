@@ -11,7 +11,7 @@ export const rdoApi = {
       data.id = Date.now();
       rdos.unshift(data); // Novo primeiro
       return Promise.resolve(data);
-    }
+    },
   },
   projetos: {
     list: () => Promise.resolve(projetos),
@@ -19,7 +19,7 @@ export const rdoApi = {
       data.id = Date.now();
       projetos.unshift(data);
       return Promise.resolve(data);
-    }
+    },
   },
   colaboradores: {
     list: () => Promise.resolve(colaboradores),
@@ -29,10 +29,10 @@ export const rdoApi = {
       return Promise.resolve(data);
     },
     delete: (id) => {
-      colaboradores = colaboradores.filter(c => c.id !== id);
+      colaboradores = colaboradores.filter((c) => c.id !== id);
       return Promise.resolve(true);
-    }
-  }
+    },
+  },
 };
 
 // Carregar dados salvos
@@ -40,7 +40,7 @@ const loadData = () => {
   const savedRdos = localStorage.getItem('rdos');
   const savedProjetos = localStorage.getItem('projetos');
   const savedColabs = localStorage.getItem('colaboradores');
-  
+
   if (savedRdos) rdos = JSON.parse(savedRdos);
   if (savedProjetos) projetos = JSON.parse(savedProjetos);
   if (savedColabs) colaboradores = JSON.parse(savedColabs);

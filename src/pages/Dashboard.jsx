@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { rdoApi } from "../api/rdoApi";
-import { FileText, Building2, Users, Clock } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { rdoApi } from '../api/rdoApi';
+import { FileText, Building2, Users, Clock } from 'lucide-react';
 
 export default function Dashboard() {
   const [rdos, setRdos] = useState([]);
@@ -15,13 +15,13 @@ export default function Dashboard() {
         const [rdosData, projetosData, colabsData] = await Promise.all([
           rdoApi.rdos.list(),
           rdoApi.projetos.list(),
-          rdoApi.colaboradores.list()
+          rdoApi.colaboradores.list(),
         ]);
         setRdos(rdosData || []);
         setProjetos(projetosData || []);
         setColaboradores(colabsData || []);
       } catch (error) {
-        console.error("Erro carregando dashboard:", error);
+        console.error('Erro carregando dashboard:', error);
       } finally {
         setLoading(false);
       }
@@ -38,15 +38,18 @@ export default function Dashboard() {
   }
 
   const rdosThisMonth = rdos.length;
-  const projetosAtivos = projetos.filter(p => p.status === 'ativo').length;
-  const colaboradoresAtivos = colaboradores.filter(c => c.status === 'ativo').length;
-  const totalHoras = rdos.reduce((sum, rdo) => sum + (rdo.total_horas_normais || 0) + (rdo.total_horas_extras || 0), 0);
+  const projetosAtivos = projetos.filter((p) => p.status === 'ativo').length;
+  const colaboradoresAtivos = colaboradores.filter((c) => c.status === 'ativo').length;
+  const totalHoras = rdos.reduce(
+    (sum, rdo) => sum + (rdo.total_horas_normais || 0) + (rdo.total_horas_extras || 0),
+    0
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Dashboard RDO</h1>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-white rounded-xl shadow-lg hover:shadow-xl p-6 transition-all duration-300 border-0">
             <div className="flex items-center mb-2">

@@ -1,6 +1,11 @@
 import jsPDF from 'jspdf';
 
-export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nomeUsuario = 'Usuário') => {
+export const exportRDOsToPDF = (
+  rdosSelecionados,
+  projetos,
+  logoUrl = null,
+  nomeUsuario = 'Usuário'
+) => {
   if (rdosSelecionados.length === 0) {
     alert('Selecione pelo menos um RDO para exportar!');
     return;
@@ -37,13 +42,22 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     if (index > 0) doc.addPage();
 
     // ✅ BUSCA PROJETO ROBUSTA (usa dados do banco se disponíveis)
-    const projeto = rdo.projeto_nome 
-      ? { nome: rdo.projeto_nome, cliente: rdo.projeto_cliente, codigo: rdo.projeto_codigo || '0000' }
-      : (projetos.find(p => 
-          String(p.id) === String(rdo.projeto_id) || 
-          p.id === rdo.projeto_id ||
-          p.id == rdo.projeto_id   
-        ) || { nome: 'Nenhum Projeto Encontrado', cliente: 'Cliente não encontrado', codigo: '0000' });
+    const projeto = rdo.projeto_nome
+      ? {
+          nome: rdo.projeto_nome,
+          cliente: rdo.projeto_cliente,
+          codigo: rdo.projeto_codigo || '0000',
+        }
+      : projetos.find(
+          (p) =>
+            String(p.id) === String(rdo.projeto_id) ||
+            p.id === rdo.projeto_id ||
+            p.id == rdo.projeto_id
+        ) || {
+          nome: 'Nenhum Projeto Encontrado',
+          cliente: 'Cliente não encontrado',
+          codigo: '0000',
+        };
 
     // ✅ LOGO - SÓ SE EXISTIR E FOR VÁLIDA
     if (logoUrl) {
@@ -64,7 +78,7 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text('G & S SOLUÇÕES EM ENERGIA L.T.D.A.', 15, yPos);
-    
+
     yPos += 8;
     doc.setFontSize(10);
     doc.text(`Data: ${formatarData(rdo.data)}`, 15, yPos);
@@ -98,7 +112,8 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     yPos += 8;
     doc.setFontSize(6);
     doc.setFont('helvetica', 'normal');
-    const legenda = "1=Desloc. 2=Doc. 3=Erro Mont. 4=Erro Proj. 5=Falha Prod. 6=Falta Infra. 7=Faltam Info. 8=Faltam Mat. 9=Faltam Painéis 10=Faltam Rec. 11=Teste Sup. 12=Clima 13=Infra. 14=Modif. Cli. 15=Outros 16=Param. 17=Plataf. 18=Reprog. 19=Reunião 20=Suporte 21=Teste Ctrl 22=Teste Prot 23=Teste Func 24=Train. 25=Seg. Trab. 26=Retrab. 27=Ocios.";
+    const legenda =
+      '1=Desloc. 2=Doc. 3=Erro Mont. 4=Erro Proj. 5=Falha Prod. 6=Falta Infra. 7=Faltam Info. 8=Faltam Mat. 9=Faltam Painéis 10=Faltam Rec. 11=Teste Sup. 12=Clima 13=Infra. 14=Modif. Cli. 15=Outros 16=Param. 17=Plataf. 18=Reprog. 19=Reunião 20=Suporte 21=Teste Ctrl 22=Teste Prot 23=Teste Func 24=Train. 25=Seg. Trab. 26=Retrab. 27=Ocios.';
     const linhasLegenda = doc.splitTextToSize(legenda, 180);
     doc.text(linhasLegenda, 15, yPos);
 
@@ -138,13 +153,14 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     });
 
     // HORAS LÍQUIDAS
-    const totalHoras = rdo.horarios?.reduce((sum, h) => {
-      if (!h.hora_inicio || !h.hora_fim) return sum;
-      const start = new Date(`1970-01-01T${h.hora_inicio}`);
-      const end = new Date(`1970-01-01T${h.hora_fim}`);
-      if (isNaN(start.getTime()) || isNaN(end.getTime())) return sum;
-      return sum + (end - start) / (1000 * 60 * 60);
-    }, 0) || 0;
+    const totalHoras =
+      rdo.horarios?.reduce((sum, h) => {
+        if (!h.hora_inicio || !h.hora_fim) return sum;
+        const start = new Date(`1970-01-01T${h.hora_inicio}`);
+        const end = new Date(`1970-01-01T${h.hora_fim}`);
+        if (isNaN(start.getTime()) || isNaN(end.getTime())) return sum;
+        return sum + (end - start) / (1000 * 60 * 60);
+      }, 0) || 0;
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
@@ -156,23 +172,26 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     doc.setFont('helvetica', 'normal');
     doc.text('Registro de Atividades:', 15, yPos);
     yPos += 6;
-    
+
     doc.setFontSize(8);
-    const textoRegistro = doc.splitTextToSize(rdo.descricao_diaria || 'Descrição não informada', 170);
+    const textoRegistro = doc.splitTextToSize(
+      rdo.descricao_diaria || 'Descrição não informada',
+      170
+    );
     doc.text(textoRegistro, 15, yPos);
-    yPos += (textoRegistro.length * 4) + 8;
+    yPos += textoRegistro.length * 4 + 8;
 
     // ASSINATURAS FIXAS
     const posAssinaturas = 220;
     doc.setFontSize(9);
-    
+
     // ESQUERDA - CONTRATADA
     doc.setFont('helvetica', 'bold');
     doc.text('CONTRATADA:', 15, posAssinaturas);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
     doc.text('G & S SOLUÇÕES EM ENERGIA', 15, posAssinaturas + 6);
-    
+
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
     doc.text('VISTO:', 15, posAssinaturas + 16);
@@ -180,7 +199,7 @@ export const exportRDOsToPDF = (rdosSelecionados, projetos, logoUrl = null, nome
     doc.setFontSize(8);
     doc.text('NOME:', 15, posAssinaturas + 26);
     doc.text(nomeUsuario, 35, posAssinaturas + 26);
-    
+
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.text('VISTO LT/PM:', 15, posAssinaturas + 38);
