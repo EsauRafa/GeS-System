@@ -18,6 +18,8 @@ import {
   FolderKanban,
   Clock,
   FileText,
+  ChevronDown,
+  Menu,
 } from 'lucide-react';
 
 import Login from './pages/Login.jsx';
@@ -73,6 +75,7 @@ const MenuLateral = () => {
           {/* MENU PRINCIPAL: RDOs (COLLAPSIBLE) */}
           <button
             type="button"
+            aria-expanded={openRdoMenu}
             onClick={() => setOpenRdoMenu((prev) => !prev)}
             className="w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-blue-700 hover:bg-blue-600 transition-all text-xs sm:text-sm font-semibold mt-2"
           >
@@ -80,9 +83,10 @@ const MenuLateral = () => {
               <FileText size={18} />
               <span>RDOs</span>
             </span>
-            <span className={`transform transition-transform ${openRdoMenu ? 'rotate-90' : ''}`}>
-              ▶
-            </span>
+            <ChevronDown
+              size={20}
+              className={`transform transition-transform ${openRdoMenu ? 'rotate-180' : ''}`}
+            />
           </button>
 
           {openRdoMenu && (
@@ -134,6 +138,7 @@ const MenuLateral = () => {
           {/* MENU: CONFIGURAÇÕES GERAIS (COLLAPSIBLE) */}
           <button
             type="button"
+            aria-expanded={openConfigMenu}
             onClick={() => setOpenConfigMenu((prev) => !prev)}
             className="w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-blue-700 hover:bg-blue-600 transition-all text-xs sm:text-sm font-semibold mt-3"
           >
@@ -141,9 +146,10 @@ const MenuLateral = () => {
               <Settings size={18} />
               <span>Configurações Gerais</span>
             </span>
-            <span className={`transform transition-transform ${openConfigMenu ? 'rotate-90' : ''}`}>
-              ▶
-            </span>
+            <ChevronDown
+              size={20}
+              className={`transform transition-transform ${openConfigMenu ? 'rotate-180' : ''}`}
+            />
           </button>
 
           {openConfigMenu && (
@@ -290,8 +296,9 @@ const LayoutPrincipal = ({ children }) => {
           <button
             onClick={() => setMenuAberto(true)}
             className="p-2 rounded-md border border-gray-200 bg-gray-50"
+            aria-label="Abrir menu"
           >
-            ☰
+            <Menu size={20} />
           </button>
           <span className="font-semibold text-sm">Sistema G&amp;S</span>
         </div>
