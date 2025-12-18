@@ -754,6 +754,7 @@ export default function RDOs() {
                           <button
                             onClick={() => deleteRdo(rdo.id)}
                             className="text-red-600 hover:text-red-900 p-1.5 rounded-lg hover:bg-red-50 transition-all"
+                            aria-label="Excluir RDO"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -966,6 +967,7 @@ export default function RDOs() {
                             type="button"
                             onClick={() => removeHorario(index)}
                             className="text-red-600 hover:text-red-800 p-2 rounded-xl hover:bg-red-50 transition-all"
+                            aria-label="Remover horário"
                           >
                             <Trash2 size={20} />
                           </button>
