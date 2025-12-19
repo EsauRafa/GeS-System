@@ -290,6 +290,7 @@ const LayoutPrincipal = ({ children }) => {
           <button
             onClick={() => setMenuAberto(true)}
             className="p-2 rounded-md border border-gray-200 bg-gray-50"
+            aria-label="Abrir menu"
           >
             ☰
           </button>
