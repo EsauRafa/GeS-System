@@ -428,10 +428,10 @@ export default function Relatorios() {
                 {podeVerOutrosFuncionarios && funcionarioSelecionado === 'todos'
                   ? `${formatDateSafe(parseISO(dataInicio))} a ${formatDateSafe(parseISO(dataFim))}`
                   : podeVerOutrosFuncionarios
-                  ? `Funcionário: ${encontrarUsuario(funcionarioSelecionado)?.nome}`
-                  : `${usuario?.nome || 'Você'}: ${formatDateSafe(
-                      parseISO(dataInicio)
-                    )} a ${formatDateSafe(parseISO(dataFim))}`}
+                    ? `Funcionário: ${encontrarUsuario(funcionarioSelecionado)?.nome}`
+                    : `${usuario?.nome || 'Você'}: ${formatDateSafe(
+                        parseISO(dataInicio)
+                      )} a ${formatDateSafe(parseISO(dataFim))}`}
               </p>
             </div>
             <div className="text-right">
