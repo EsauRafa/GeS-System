@@ -18,6 +18,7 @@ import {
   FolderKanban,
   Clock,
   FileText,
+  ChevronRight,
 } from 'lucide-react';
 
 import Login from './pages/Login.jsx';
@@ -75,18 +76,21 @@ const MenuLateral = () => {
             type="button"
             onClick={() => setOpenRdoMenu((prev) => !prev)}
             className="w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-blue-700 hover:bg-blue-600 transition-all text-xs sm:text-sm font-semibold mt-2"
+            aria-expanded={openRdoMenu}
+            aria-controls="rdo-submenu"
           >
             <span className="flex items-center space-x-2">
               <FileText size={18} />
               <span>RDOs</span>
             </span>
-            <span className={`transform transition-transform ${openRdoMenu ? 'rotate-90' : ''}`}>
-              ▶
-            </span>
+            <ChevronRight
+              size={16}
+              className={`transform transition-transform ${openRdoMenu ? 'rotate-90' : ''}`}
+            />
           </button>
 
           {openRdoMenu && (
-            <div className="ml-3 sm:ml-4 mt-1 space-y-1">
+            <div id="rdo-submenu" className="ml-3 sm:ml-4 mt-1 space-y-1">
               <NavLink
                 to="/rdos"
                 className={({ isActive }) =>
@@ -136,18 +140,21 @@ const MenuLateral = () => {
             type="button"
             onClick={() => setOpenConfigMenu((prev) => !prev)}
             className="w-full flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-blue-700 hover:bg-blue-600 transition-all text-xs sm:text-sm font-semibold mt-3"
+            aria-expanded={openConfigMenu}
+            aria-controls="config-submenu"
           >
             <span className="flex items-center space-x-2">
               <Settings size={18} />
               <span>Configurações Gerais</span>
             </span>
-            <span className={`transform transition-transform ${openConfigMenu ? 'rotate-90' : ''}`}>
-              ▶
-            </span>
+            <ChevronRight
+              size={16}
+              className={`transform transition-transform ${openConfigMenu ? 'rotate-90' : ''}`}
+            />
           </button>
 
           {openConfigMenu && (
-            <div className="ml-3 sm:ml-4 mt-1 space-y-1">
+            <div id="config-submenu" className="ml-3 sm:ml-4 mt-1 space-y-1">
               <NavLink
                 to="/configuracoes"
                 className={({ isActive }) =>
