@@ -1,0 +1,11 @@
+
+> ges-system@0.0.0 dev /app
+> vite
+
+
+  VITE v7.3.1  ready in 355 ms
+
+  ➜  Local:   http://localhost:5173/GeS-System/
+  ➜  Network: use --host to expose
+12:38:06 PM [vite] (client) hmr update /src/pages/Login.jsx, /src/index.css
+12:38:55 PM [vite] (client) hmr update /src/pages/Login.jsx, /src/index.css
