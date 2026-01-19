@@ -1,0 +1,234 @@
+[Sun Nov 02 01:40:33.447154 2025] [php7:error] [pid 108] [client 67.205.22.196:53120] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 01:51:14.816038 2025] [php7:error] [pid 117] [client 198.20.104.194:46476] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 01:55:57.305682 2025] [php7:error] [pid 115] [client 103.42.58.162:52214] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:02:17.856713 2025] [php7:error] [pid 115] [client 103.191.208.56:55440] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:08:33.442467 2025] [php7:error] [pid 115] [client 159.195.15.135:57298] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:10:47.745806 2025] [php7:error] [pid 117] [client 82.165.60.30:57938] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:13:03.064296 2025] [php7:error] [pid 116] [client 154.90.173.121:58606] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com
+[Sun Nov 02 02:15:22.175783 2025] [php7:error] [pid 115] [client 205.185.120.218:59276] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:16:36.683671 2025] [php7:error] [pid 117] [client 45.61.188.233:59606] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sun Nov 02 02:50:12.014436 2025] [php7:error] [pid 107] [client 52.242.231.141:12418] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:59:19.139036 2025] [php7:error] [pid 107] [client 104.244.78.206:15722] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 02:59:57.955822 2025] [php7:error] [pid 108] [client 198.98.53.242:15904] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 03:24:58.335671 2025] [php7:error] [pid 107] [client 213.136.75.53:3658] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 03:40:48.395927 2025] [php7:error] [pid 109] [client 205.185.120.118:60712] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 03:42:50.883584 2025] [php7:error] [pid 109] [client 107.189.14.208:61786] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:00:25.473438 2025] [php7:error] [pid 109] [client 137.184.7.243:60712] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:04:56.269515 2025] [php7:error] [pid 109] [client 161.132.48.191:62406] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:12:16.250090 2025] [php7:error] [pid 107] [client 220.158.232.245:3175] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:17:06.573411 2025] [php7:error] [pid 108] [client 199.195.248.152:4653] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:23:28.945128 2025] [php7:error] [pid 109] [client 162.19.11.69:6799] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:31:47.281197 2025] [php7:error] [pid 109] [client 34.134.144.77:9725] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:33:36.506052 2025] [php7:error] [pid 108] [client 198.98.59.143:10205] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com/
+[Sun Nov 02 04:35:27.239489 2025] [php7:error] [pid 109] [client 66.29.153.8:10967] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 04:42:36.310149 2025] [php7:error] [pid 107] [client 107.189.7.132:14201] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com/
+[Sun Nov 02 04:54:47.498444 2025] [php7:error] [pid 107] [client 220.158.232.162:20709] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:00:19.728924 2025] [php7:error] [pid 108] [client 57.130.20.252:22415] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:20:37.548884 2025] [php7:error] [pid 107] [client 165.22.241.155:35049] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:24:01.839616 2025] [php7:error] [pid 105] [client 104.244.74.116:36173] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://duckduckgo.com/
+[Sun Nov 02 05:36:12.022978 2025] [php7:error] [pid 115] [client 160.25.166.14:58986] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:39:51.762276 2025] [php7:error] [pid 116] [client 165.22.241.155:60628] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:43:13.729154 2025] [php7:error] [pid 115] [client 104.244.74.116:62372] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.yahoo.com/
+[Sun Nov 02 05:46:30.138801 2025] [php7:error] [pid 116] [client 107.189.5.102:63406] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com/
+[Sun Nov 02 05:50:28.661100 2025] [php7:error] [pid 117] [client 162.241.203.167:64316] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 05:55:24.849906 2025] [php7:error] [pid 115] [client 45.138.16.216:2549] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 05:55:25.078984 2025] [php7:error] [pid 117] [client 45.138.16.216:2557] script '/var/www/html/solucoesges.com.br/web/waglmsqp.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 05:55:25.966784 2025] [php7:error] [pid 117] [client 45.138.16.216:2569] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 05:55:26.190181 2025] [php7:error] [pid 116] [client 45.138.16.216:2571] script '/var/www/html/solucoesges.com.br/web/ahmdsysq.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 05:59:15.692926 2025] [php7:error] [pid 115] [client 217.131.14.2:3411] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:09:45.641876 2025] [php7:error] [pid 107] [client 205.185.114.63:11545] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:10:07.365801 2025] [php7:error] [pid 108] [client 45.87.42.68:11647] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:13:24.614823 2025] [php7:error] [pid 108] [client 107.189.7.132:13277] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sun Nov 02 06:17:58.166393 2025] [php7:error] [pid 106] [client 141.98.11.175:15867] script '/var/www/html/solucoesges.com.br/web/postnews.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 06:18:03.541466 2025] [php7:error] [pid 108] [client 141.98.11.175:15879] script '/var/www/html/solucoesges.com.br/web/gdftps.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 06:18:07.686614 2025] [php7:error] [pid 107] [client 141.98.11.175:15885] script '/var/www/html/solucoesges.com.br/web/style.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 06:18:10.721327 2025] [php7:error] [pid 106] [client 141.98.11.175:15891] script '/var/www/html/solucoesges.com.br/web/ss.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 06:27:13.080995 2025] [php7:error] [pid 106] [client 107.189.14.208:21585] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:30:44.437131 2025] [php7:error] [pid 107] [client 178.253.43.167:24059] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:31:59.897864 2025] [php7:error] [pid 106] [client 45.138.99.186:24607] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:36:27.441279 2025] [php7:error] [pid 107] [client 165.227.84.14:27145] script '/var/www/html/solucoesges.com.br/web/info.php' not found or unable to stat
+[Sun Nov 02 06:38:55.181998 2025] [php7:error] [pid 108] [client 148.66.159.158:28963] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:40:40.355460 2025] [php7:error] [pid 106] [client 38.242.251.125:29735] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://solucoesges.com.br/wp-login.php
+[Sun Nov 02 06:41:41.667958 2025] [php7:error] [pid 108] [client 108.167.132.89:30213] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:53:07.499489 2025] [php7:error] [pid 132] [client 192.185.12.167:18550] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 06:55:58.672617 2025] [php7:error] [pid 131] [client 184.168.97.145:20766] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 07:13:17.538918 2025] [php7:error] [pid 117] [client 130.33.73.203:36876] script '/var/www/html/solucoesges.com.br/web/shoha.php' not found or unable to stat
+[Sun Nov 02 07:13:17.839868 2025] [php7:error] [pid 115] [client 130.33.73.203:36878] script '/var/www/html/solucoesges.com.br/web/atomlib.php' not found or unable to stat
+[Sun Nov 02 07:13:18.110987 2025] [php7:error] [pid 116] [client 130.33.73.203:36880] script '/var/www/html/solucoesges.com.br/web/cong.php' not found or unable to stat
+[Sun Nov 02 07:13:18.408111 2025] [php7:error] [pid 117] [client 130.33.73.203:36882] script '/var/www/html/solucoesges.com.br/web/g.php' not found or unable to stat
+[Sun Nov 02 07:13:18.681332 2025] [php7:error] [pid 115] [client 130.33.73.203:36884] script '/var/www/html/solucoesges.com.br/web/log.php' not found or unable to stat
+[Sun Nov 02 07:13:19.127454 2025] [php7:error] [pid 116] [client 130.33.73.203:36886] script '/var/www/html/solucoesges.com.br/web/1index.php' not found or unable to stat
+[Sun Nov 02 07:13:19.398181 2025] [php7:error] [pid 117] [client 130.33.73.203:36890] script '/var/www/html/solucoesges.com.br/web/fmk.php' not found or unable to stat
+[Sun Nov 02 07:13:19.680759 2025] [php7:error] [pid 115] [client 130.33.73.203:36892] script '/var/www/html/solucoesges.com.br/web/xl2023.php' not found or unable to stat
+[Sun Nov 02 07:13:20.058627 2025] [php7:error] [pid 116] [client 130.33.73.203:36894] script '/var/www/html/solucoesges.com.br/web/new.php' not found or unable to stat
+[Sun Nov 02 07:13:20.343833 2025] [php7:error] [pid 117] [client 130.33.73.203:36896] script '/var/www/html/solucoesges.com.br/web/AxAo.php' not found or unable to stat
+[Sun Nov 02 07:13:20.622945 2025] [php7:error] [pid 115] [client 130.33.73.203:36900] script '/var/www/html/solucoesges.com.br/web/chosen.php' not found or unable to stat
+[Sun Nov 02 07:13:21.840251 2025] [php7:error] [pid 116] [client 130.33.73.203:36914] script '/var/www/html/solucoesges.com.br/web/v3.php' not found or unable to stat
+[Sun Nov 02 07:13:22.108826 2025] [php7:error] [pid 117] [client 130.33.73.203:36916] script '/var/www/html/solucoesges.com.br/web/sto.php' not found or unable to stat
+[Sun Nov 02 07:13:22.552694 2025] [php7:error] [pid 115] [client 130.33.73.203:36920] script '/var/www/html/solucoesges.com.br/web/bless.php' not found or unable to stat
+[Sun Nov 02 07:13:25.414460 2025] [php7:error] [pid 116] [client 130.33.73.203:36970] script '/var/www/html/solucoesges.com.br/web/wp-2019.php' not found or unable to stat
+[Sun Nov 02 07:13:29.062227 2025] [php7:error] [pid 117] [client 130.33.73.203:36994] script '/var/www/html/solucoesges.com.br/web/zhidagen.php' not found or unable to stat
+[Sun Nov 02 07:13:29.374143 2025] [php7:error] [pid 115] [client 130.33.73.203:37012] script '/var/www/html/solucoesges.com.br/web/bb2.php' not found or unable to stat
+[Sun Nov 02 07:13:29.694533 2025] [php7:error] [pid 116] [client 130.33.73.203:37016] script '/var/www/html/solucoesges.com.br/web/nc.php' not found or unable to stat
+[Sun Nov 02 07:13:29.968482 2025] [php7:error] [pid 117] [client 130.33.73.203:37022] script '/var/www/html/solucoesges.com.br/web/er8.php' not found or unable to stat
+[Sun Nov 02 07:13:30.776877 2025] [php7:error] [pid 115] [client 130.33.73.203:37038] script '/var/www/html/solucoesges.com.br/web/file2.php' not found or unable to stat
+[Sun Nov 02 07:13:32.194131 2025] [php7:error] [pid 116] [client 130.33.73.203:37064] script '/var/www/html/solucoesges.com.br/web/wp-head.php' not found or unable to stat
+[Sun Nov 02 07:13:32.464371 2025] [php7:error] [pid 117] [client 130.33.73.203:37066] script '/var/www/html/solucoesges.com.br/web/uploadx.php' not found or unable to stat
+[Sun Nov 02 07:13:32.980468 2025] [php7:error] [pid 115] [client 130.33.73.203:37076] script '/var/www/html/solucoesges.com.br/web/nl.php' not found or unable to stat
+[Sun Nov 02 07:13:35.886020 2025] [php7:error] [pid 116] [client 130.33.73.203:37090] script '/var/www/html/solucoesges.com.br/web/bless2.php' not found or unable to stat
+[Sun Nov 02 07:13:36.160836 2025] [php7:error] [pid 117] [client 130.33.73.203:37092] script '/var/www/html/solucoesges.com.br/web/menu.php' not found or unable to stat
+[Sun Nov 02 07:13:36.442780 2025] [php7:error] [pid 115] [client 130.33.73.203:37096] script '/var/www/html/solucoesges.com.br/web/okxoby.php' not found or unable to stat
+[Sun Nov 02 07:13:37.201410 2025] [php7:error] [pid 116] [client 130.33.73.203:37106] script '/var/www/html/solucoesges.com.br/web/filesss.php' not found or unable to stat
+[Sun Nov 02 07:13:39.719941 2025] [php7:error] [pid 117] [client 130.33.73.203:37114] script '/var/www/html/solucoesges.com.br/web/af4.php' not found or unable to stat
+[Sun Nov 02 07:13:41.228594 2025] [php7:error] [pid 116] [client 130.33.73.203:37118] script '/var/www/html/solucoesges.com.br/web/555.php' not found or unable to stat
+[Sun Nov 02 07:13:41.502684 2025] [php7:error] [pid 117] [client 130.33.73.203:37124] script '/var/www/html/solucoesges.com.br/web/gdn.php' not found or unable to stat
+[Sun Nov 02 07:13:41.777504 2025] [php7:error] [pid 115] [client 130.33.73.203:37132] script '/var/www/html/solucoesges.com.br/web/class17.php' not found or unable to stat
+[Sun Nov 02 07:13:42.050258 2025] [php7:error] [pid 116] [client 130.33.73.203:37134] script '/var/www/html/solucoesges.com.br/web/class.php' not found or unable to stat
+[Sun Nov 02 07:13:42.344854 2025] [php7:error] [pid 117] [client 130.33.73.203:37138] script '/var/www/html/solucoesges.com.br/web/222.php' not found or unable to stat
+[Sun Nov 02 07:13:42.616748 2025] [php7:error] [pid 115] [client 130.33.73.203:37140] script '/var/www/html/solucoesges.com.br/web/wp.php' not found or unable to stat
+[Sun Nov 02 07:13:42.927337 2025] [php7:error] [pid 116] [client 130.33.73.203:37152] script '/var/www/html/solucoesges.com.br/web/makeasmtp.php' not found or unable to stat
+[Sun Nov 02 07:13:43.685610 2025] [php7:error] [pid 117] [client 130.33.73.203:37156] script '/var/www/html/solucoesges.com.br/web/radio.php' not found or unable to stat
+[Sun Nov 02 07:13:44.029589 2025] [php7:error] [pid 115] [client 130.33.73.203:37162] script '/var/www/html/solucoesges.com.br/web/manager.php' not found or unable to stat
+[Sun Nov 02 07:13:44.387638 2025] [php7:error] [pid 116] [client 130.33.73.203:37164] script '/var/www/html/solucoesges.com.br/web/we2.php' not found or unable to stat
+[Sun Nov 02 07:13:45.187367 2025] [php7:error] [pid 117] [client 130.33.73.203:37166] script '/var/www/html/solucoesges.com.br/web/mar.php' not found or unable to stat
+[Sun Nov 02 07:13:48.482967 2025] [php7:error] [pid 115] [client 130.33.73.203:37184] script '/var/www/html/solucoesges.com.br/web/lv.php' not found or unable to stat
+[Sun Nov 02 07:13:48.791906 2025] [php7:error] [pid 116] [client 130.33.73.203:37186] script '/var/www/html/solucoesges.com.br/web/mail.php' not found or unable to stat
+[Sun Nov 02 07:13:49.362667 2025] [php7:error] [pid 115] [client 130.33.73.203:37198] script '/var/www/html/solucoesges.com.br/web/aipoyp.php' not found or unable to stat
+[Sun Nov 02 07:13:49.644055 2025] [php7:error] [pid 116] [client 130.33.73.203:37204] script '/var/www/html/solucoesges.com.br/web/db.php' not found or unable to stat
+[Sun Nov 02 07:13:49.924824 2025] [php7:error] [pid 117] [client 130.33.73.203:37212] script '/var/www/html/solucoesges.com.br/web/m.php' not found or unable to stat
+[Sun Nov 02 07:13:50.198744 2025] [php7:error] [pid 115] [client 130.33.73.203:37214] script '/var/www/html/solucoesges.com.br/web/up.php' not found or unable to stat
+[Sun Nov 02 07:13:50.468640 2025] [php7:error] [pid 116] [client 130.33.73.203:37216] script '/var/www/html/solucoesges.com.br/web/dfre.php' not found or unable to stat
+[Sun Nov 02 07:13:50.763251 2025] [php7:error] [pid 117] [client 130.33.73.203:37220] script '/var/www/html/solucoesges.com.br/web/men.php' not found or unable to stat
+[Sun Nov 02 07:13:51.033324 2025] [php7:error] [pid 115] [client 130.33.73.203:37222] script '/var/www/html/solucoesges.com.br/web/media.php' not found or unable to stat
+[Sun Nov 02 07:13:51.587615 2025] [php7:error] [pid 117] [client 130.33.73.203:37230] script '/var/www/html/solucoesges.com.br/web/uplozyu.php' not found or unable to stat
+[Sun Nov 02 07:13:52.134129 2025] [php7:error] [pid 116] [client 130.33.73.203:37242] script '/var/www/html/solucoesges.com.br/web/shell.php' not found or unable to stat
+[Sun Nov 02 07:13:52.440141 2025] [php7:error] [pid 117] [client 130.33.73.203:37244] script '/var/www/html/solucoesges.com.br/web/system.php' not found or unable to stat
+[Sun Nov 02 07:13:52.723737 2025] [php7:error] [pid 115] [client 130.33.73.203:37250] script '/var/www/html/solucoesges.com.br/web/num.php' not found or unable to stat
+[Sun Nov 02 07:13:52.996418 2025] [php7:error] [pid 116] [client 130.33.73.203:37252] script '/var/www/html/solucoesges.com.br/web/zc-749.php' not found or unable to stat
+[Sun Nov 02 07:13:53.301402 2025] [php7:error] [pid 117] [client 130.33.73.203:37256] script '/var/www/html/solucoesges.com.br/web/bala.php' not found or unable to stat
+[Sun Nov 02 07:13:54.334363 2025] [php7:error] [pid 115] [client 130.33.73.203:37260] script '/var/www/html/solucoesges.com.br/web/item.php' not found or unable to stat
+[Sun Nov 02 07:13:54.612072 2025] [php7:error] [pid 116] [client 130.33.73.203:37262] script '/var/www/html/solucoesges.com.br/web/000.php' not found or unable to stat
+[Sun Nov 02 07:13:54.883382 2025] [php7:error] [pid 117] [client 130.33.73.203:37264] script '/var/www/html/solucoesges.com.br/web/file22.php' not found or unable to stat
+[Sun Nov 02 07:13:55.194558 2025] [php7:error] [pid 115] [client 130.33.73.203:37266] script '/var/www/html/solucoesges.com.br/web/jf1d22.php' not found or unable to stat
+[Sun Nov 02 07:13:55.465287 2025] [php7:error] [pid 116] [client 130.33.73.203:37268] script '/var/www/html/solucoesges.com.br/web/asd67.php' not found or unable to stat
+[Sun Nov 02 07:13:55.912954 2025] [php7:error] [pid 117] [client 130.33.73.203:37272] script '/var/www/html/solucoesges.com.br/web/Okxob.php' not found or unable to stat
+[Sun Nov 02 07:13:56.197814 2025] [php7:error] [pid 115] [client 130.33.73.203:37294] script '/var/www/html/solucoesges.com.br/web/mah.php' not found or unable to stat
+[Sun Nov 02 07:13:56.466647 2025] [php7:error] [pid 116] [client 130.33.73.203:37298] script '/var/www/html/solucoesges.com.br/web/goat1.php' not found or unable to stat
+[Sun Nov 02 07:13:56.737841 2025] [php7:error] [pid 117] [client 130.33.73.203:37302] script '/var/www/html/solucoesges.com.br/web/naxc.php' not found or unable to stat
+[Sun Nov 02 07:13:57.081538 2025] [php7:error] [pid 115] [client 130.33.73.203:37304] script '/var/www/html/solucoesges.com.br/web/lock360.php' not found or unable to stat
+[Sun Nov 02 07:13:57.364165 2025] [php7:error] [pid 116] [client 130.33.73.203:37308] script '/var/www/html/solucoesges.com.br/web/ini.php' not found or unable to stat
+[Sun Nov 02 07:13:57.637330 2025] [php7:error] [pid 117] [client 130.33.73.203:37310] script '/var/www/html/solucoesges.com.br/web/uploat.php' not found or unable to stat
+[Sun Nov 02 07:13:58.215606 2025] [php7:error] [pid 116] [client 130.33.73.203:37324] script '/var/www/html/solucoesges.com.br/web/wp-configs.php' not found or unable to stat
+[Sun Nov 02 07:13:58.485391 2025] [php7:error] [pid 117] [client 130.33.73.203:37326] script '/var/www/html/solucoesges.com.br/web/zc-903.php' not found or unable to stat
+[Sun Nov 02 07:13:59.304364 2025] [php7:error] [pid 117] [client 130.33.73.203:37342] script '/var/www/html/solucoesges.com.br/web/oxvrws.php' not found or unable to stat
+[Sun Nov 02 07:13:59.590406 2025] [php7:error] [pid 115] [client 130.33.73.203:37346] script '/var/www/html/solucoesges.com.br/web/we.php' not found or unable to stat
+[Sun Nov 02 07:13:59.866692 2025] [php7:error] [pid 116] [client 130.33.73.203:37348] script '/var/www/html/solucoesges.com.br/web/02.php' not found or unable to stat
+[Sun Nov 02 07:14:00.135466 2025] [php7:error] [pid 117] [client 130.33.73.203:37352] script '/var/www/html/solucoesges.com.br/web/system_log.php' not found or unable to stat
+[Sun Nov 02 07:14:00.410561 2025] [php7:error] [pid 115] [client 130.33.73.203:37354] script '/var/www/html/solucoesges.com.br/web/CLA.php' not found or unable to stat
+[Sun Nov 02 07:14:00.679201 2025] [php7:error] [pid 116] [client 130.33.73.203:37356] script '/var/www/html/solucoesges.com.br/web/sk25_1.php' not found or unable to stat
+[Sun Nov 02 07:14:00.954968 2025] [php7:error] [pid 117] [client 130.33.73.203:37358] script '/var/www/html/solucoesges.com.br/web/autoload_classmap.php' not found or unable to stat
+[Sun Nov 02 07:14:01.501090 2025] [php7:error] [pid 116] [client 130.33.73.203:37366] script '/var/www/html/solucoesges.com.br/web/file21.php' not found or unable to stat
+[Sun Nov 02 07:14:01.774977 2025] [php7:error] [pid 117] [client 130.33.73.203:37372] script '/var/www/html/solucoesges.com.br/web/himu.php' not found or unable to stat
+[Sun Nov 02 07:14:02.051064 2025] [php7:error] [pid 115] [client 130.33.73.203:37374] script '/var/www/html/solucoesges.com.br/web/hn.php' not found or unable to stat
+[Sun Nov 02 07:14:02.758635 2025] [php7:error] [pid 117] [client 130.33.73.203:37378] script '/var/www/html/solucoesges.com.br/web/flower.php' not found or unable to stat
+[Sun Nov 02 07:14:03.032989 2025] [php7:error] [pid 115] [client 130.33.73.203:37380] script '/var/www/html/solucoesges.com.br/web/f35.php' not found or unable to stat
+[Sun Nov 02 07:14:03.308430 2025] [php7:error] [pid 116] [client 130.33.73.203:37382] script '/var/www/html/solucoesges.com.br/web/doc.php' not found or unable to stat
+[Sun Nov 02 07:14:03.591877 2025] [php7:error] [pid 117] [client 130.33.73.203:37384] script '/var/www/html/solucoesges.com.br/web/tentang_rmol.php' not found or unable to stat
+[Sun Nov 02 07:14:04.377565 2025] [php7:error] [pid 115] [client 130.33.73.203:37390] script '/var/www/html/solucoesges.com.br/web/pass.php' not found or unable to stat
+[Sun Nov 02 07:14:04.655232 2025] [php7:error] [pid 116] [client 130.33.73.203:37392] script '/var/www/html/solucoesges.com.br/web/classwithtostring.php' not found or unable to stat
+[Sun Nov 02 07:14:05.219933 2025] [php7:error] [pid 117] [client 130.33.73.203:37398] script '/var/www/html/solucoesges.com.br/web/jp.php' not found or unable to stat
+[Sun Nov 02 07:14:05.761048 2025] [php7:error] [pid 115] [client 130.33.73.203:37400] script '/var/www/html/solucoesges.com.br/web/cc.php' not found or unable to stat
+[Sun Nov 02 07:14:06.034937 2025] [php7:error] [pid 116] [client 130.33.73.203:37404] script '/var/www/html/solucoesges.com.br/web/file5.php' not found or unable to stat
+[Sun Nov 02 07:22:01.073006 2025] [php7:error] [pid 116] [client 101.100.194.71:40928] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 07:39:31.656584 2025] [php7:error] [pid 108] [client 162.240.155.58:8417] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 07:41:24.407454 2025] [php7:error] [pid 109] [client 103.133.214.209:9425] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 07:45:34.881565 2025] [php7:error] [pid 108] [client 85.215.252.72:11355] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 08:06:01.723451 2025] [php7:error] [pid 107] [client 195.20.233.67:20347] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 08:21:30.610383 2025] [php7:error] [pid 108] [client 103.216.118.237:42220] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 08:22:35.633248 2025] [php7:error] [pid 108] [client 178.253.43.167:42528] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 08:33:19.557301 2025] [php7:error] [pid 107] [client 35.75.178.65:28518] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 08:43:28.015043 2025] [php7:error] [pid 107] [client 103.124.95.251:32116] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:01:50.310435 2025] [php7:error] [pid 108] [client 148.251.67.116:23012] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:04:38.905124 2025] [php7:error] [pid 109] [client 51.210.156.152:23930] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:05:44.105305 2025] [php7:error] [pid 107] [client 205.185.114.63:24136] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:12:28.123257 2025] [php7:error] [pid 109] [client 118.139.182.104:27252] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://solucoesges.com.br/wp-login.php
+[Sun Nov 02 09:13:57.712204 2025] [php7:error] [pid 108] [client 157.15.203.39:27902] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:14:01.809767 2025] [php7:error] [pid 109] [client 209.141.61.56:27940] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:18:54.734564 2025] [php7:error] [pid 108] [client 205.185.121.77:30058] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:21:12.391066 2025] [php7:error] [pid 109] [client 89.117.74.114:30848] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:35:36.092187 2025] [php7:error] [pid 112] [client 89.252.164.140:55232] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:39:01.614900 2025] [php7:error] [pid 112] [client 89.117.74.114:56426] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:45:57.885682 2025] [php7:error] [pid 111] [client 45.61.188.54:59570] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:50:54.094495 2025] [php7:error] [pid 112] [client 107.189.14.208:60724] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 09:59:36.921001 2025] [php7:error] [pid 110] [client 65.254.81.138:62936] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 10:03:16.168112 2025] [php7:error] [pid 110] [client 107.189.1.5:63686] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.yahoo.com/
+[Sun Nov 02 10:14:42.158216 2025] [php7:error] [pid 112] [client 67.205.4.243:56287] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 10:36:37.309726 2025] [php7:error] [pid 109] [client 103.152.248.8:43264] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 10:45:58.324163 2025] [php7:error] [pid 110] [client 139.99.88.191:48734] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 10:49:05.053797 2025] [php7:error] [pid 109] [client 107.189.7.132:50132] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sun Nov 02 10:49:22.364529 2025] [php7:error] [pid 108] [client 205.185.120.218:50206] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 10:50:03.394008 2025] [php7:error] [pid 110] [client 48.210.82.76:50738] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 10:50:03.676682 2025] [php7:error] [pid 108] [client 48.210.82.76:50744] script '/var/www/html/solucoesges.com.br/web/wfdkrpfr.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 10:50:08.713191 2025] [php7:error] [pid 109] [client 48.210.82.76:50810] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 10:50:08.988685 2025] [php7:error] [pid 110] [client 48.210.82.76:50814] script '/var/www/html/solucoesges.com.br/web/ukidajsl.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 10:58:05.673008 2025] [php7:error] [pid 109] [client 82.165.60.30:56506] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:02:23.821018 2025] [php7:error] [pid 110] [client 205.185.120.218:57960] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:06:33.569371 2025] [php7:error] [pid 108] [client 45.87.42.68:59606] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:18:59.576277 2025] [php7:error] [pid 102] [client 198.54.114.118:32200] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:21:28.127361 2025] [php7:error] [pid 102] [client 160.250.204.106:33766] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:24:53.740681 2025] [php7:error] [pid 103] [client 143.110.189.28:35708] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:29:40.871716 2025] [php7:error] [pid 103] [client 64.23.233.138:38832] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:38:24.058217 2025] [php7:error] [pid 103] [client 62.219.106.108:42796] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:40:36.697312 2025] [php7:error] [pid 102] [client 5.180.252.164:43362] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 11:44:41.179447 2025] [php7:error] [pid 103] [client 205.185.127.199:44382] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sun Nov 02 11:45:18.489729 2025] [php7:error] [pid 102] [client 139.59.33.85:44504] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:04:08.621637 2025] [php7:error] [pid 110] [client 216.126.227.176:62460] script '/var/www/html/solucoesges.com.br/web/geju.php' not found or unable to stat
+[Sun Nov 02 12:04:10.293154 2025] [php7:error] [pid 112] [client 216.126.227.176:62466] script '/var/www/html/solucoesges.com.br/web/geju.php' not found or unable to stat
+[Sun Nov 02 12:04:12.712840 2025] [php7:error] [pid 111] [client 216.126.227.176:62574] script '/var/www/html/solucoesges.com.br/web/wp.php' not found or unable to stat
+[Sun Nov 02 12:13:29.100552 2025] [php7:error] [pid 111] [client 154.38.189.70:4213] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:29:31.344485 2025] [php7:error] [pid 110] [client 196.251.73.160:13431] script '/var/www/html/solucoesges.com.br/web/style.php' not found or unable to stat
+[Sun Nov 02 12:29:32.399196 2025] [php7:error] [pid 111] [client 196.251.73.160:13463] script '/var/www/html/solucoesges.com.br/web/chosen.php' not found or unable to stat
+[Sun Nov 02 12:29:32.611089 2025] [php7:error] [pid 110] [client 196.251.73.160:13469] script '/var/www/html/solucoesges.com.br/web/file.php' not found or unable to stat
+[Sun Nov 02 12:29:32.818993 2025] [php7:error] [pid 112] [client 196.251.73.160:13471] script '/var/www/html/solucoesges.com.br/web/flower.php' not found or unable to stat
+[Sun Nov 02 12:29:33.032719 2025] [php7:error] [pid 111] [client 196.251.73.160:13479] script '/var/www/html/solucoesges.com.br/web/gifclass.php' not found or unable to stat
+[Sun Nov 02 12:29:33.242787 2025] [php7:error] [pid 110] [client 196.251.73.160:13503] script '/var/www/html/solucoesges.com.br/web/bless.php' not found or unable to stat
+[Sun Nov 02 12:29:33.459680 2025] [php7:error] [pid 112] [client 196.251.73.160:13513] script '/var/www/html/solucoesges.com.br/web/class-t.api.php' not found or unable to stat
+[Sun Nov 02 12:29:33.672914 2025] [php7:error] [pid 111] [client 196.251.73.160:13523] script '/var/www/html/solucoesges.com.br/web/blurbs.php' not found or unable to stat
+[Sun Nov 02 12:29:33.895014 2025] [php7:error] [pid 110] [client 196.251.73.160:13533] script '/var/www/html/solucoesges.com.br/web/akcc.php' not found or unable to stat
+[Sun Nov 02 12:29:34.108813 2025] [php7:error] [pid 112] [client 196.251.73.160:13543] script '/var/www/html/solucoesges.com.br/web/abcd.php' not found or unable to stat
+[Sun Nov 02 12:29:36.595297 2025] [php7:error] [pid 111] [client 196.251.73.160:13619] script '/var/www/html/solucoesges.com.br/web/doc.php' not found or unable to stat
+[Sun Nov 02 12:29:37.277626 2025] [php7:error] [pid 111] [client 196.251.73.160:13741] script '/var/www/html/solucoesges.com.br/web/akc.php' not found or unable to stat
+[Sun Nov 02 12:29:37.490764 2025] [php7:error] [pid 110] [client 196.251.73.160:13751] script '/var/www/html/solucoesges.com.br/web/zoo.php' not found or unable to stat
+[Sun Nov 02 12:29:37.714069 2025] [php7:error] [pid 112] [client 196.251.73.160:13759] script '/var/www/html/solucoesges.com.br/web/zwso.php' not found or unable to stat
+[Sun Nov 02 12:29:40.233081 2025] [php7:error] [pid 111] [client 196.251.73.160:13817] script '/var/www/html/solucoesges.com.br/web/bolt.php' not found or unable to stat
+[Sun Nov 02 12:29:40.442547 2025] [php7:error] [pid 110] [client 196.251.73.160:13819] script '/var/www/html/solucoesges.com.br/web/shlo.php' not found or unable to stat
+[Sun Nov 02 12:29:40.664689 2025] [php7:error] [pid 112] [client 196.251.73.160:13825] script '/var/www/html/solucoesges.com.br/web/files.php' not found or unable to stat
+[Sun Nov 02 12:29:40.876460 2025] [php7:error] [pid 111] [client 196.251.73.160:13827] script '/var/www/html/solucoesges.com.br/web/wp-editor.php' not found or unable to stat
+[Sun Nov 02 12:30:04.984355 2025] [php7:error] [pid 110] [client 152.53.42.70:14753] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:32:11.024887 2025] [php7:error] [pid 112] [client 103.158.108.3:16793] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:39:01.757409 2025] [php7:error] [pid 110] [client 205.185.120.218:20029] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:56:11.427691 2025] [php7:error] [pid 104] [client 213.136.75.53:2607] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 12:59:53.711017 2025] [php7:error] [pid 102] [client 177.136.242.60:4847] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 13:01:02.526005 2025] [php7:error] [pid 103] [client 194.26.192.75:5871] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 13:01:02.765336 2025] [php7:error] [pid 102] [client 194.26.192.75:5883] script '/var/www/html/solucoesges.com.br/web/xizzdebm.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 13:01:03.573237 2025] [php7:error] [pid 103] [client 194.26.192.75:5901] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 13:01:03.778897 2025] [php7:error] [pid 102] [client 194.26.192.75:5907] script '/var/www/html/solucoesges.com.br/web/bcthyvzt.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 13:09:17.142675 2025] [php7:error] [pid 102] [client 45.61.184.55:10331] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 13:20:04.872124 2025] [php7:error] [pid 112] [client 107.189.14.134:49328] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://duckduckgo.com/
+[Sun Nov 02 14:14:45.714824 2025] [php7:error] [pid 113] [client 107.189.14.134:57253] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 14:33:59.394788 2025] [php7:error] [pid 111] [client 107.189.1.5:8617] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.yahoo.com/
+[Sun Nov 02 18:49:27.717026 2025] [php7:error] [pid 110] [client 209.141.52.237:41110] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 19:15:56.884101 2025] [php7:error] [pid 105] [client 205.185.121.77:45229] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 19:31:44.175282 2025] [php7:error] [pid 111] [client 198.98.53.242:63672] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 20:31:46.322922 2025] [php7:error] [pid 104] [client 45.61.188.132:17089] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 20:32:55.585226 2025] [php7:error] [pid 103] [client 205.185.120.218:17779] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 20:44:29.462919 2025] [php7:error] [pid 104] [client 107.189.7.132:26347] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com/
+[Sun Nov 02 21:39:15.127401 2025] [php7:error] [pid 117] [client 107.189.30.207:6040] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sun Nov 02 21:45:47.701408 2025] [php7:error] [pid 116] [client 51.38.121.102:11766] script '/var/www/html/solucoesges.com.br/web/htacces.php' not found or unable to stat
+[Sun Nov 02 21:56:02.806936 2025] [php7:error] [pid 103] [client 107.189.13.175:57959] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.yahoo.com/
+[Sun Nov 02 22:12:31.567903 2025] [php7:error] [pid 151] [client 205.185.120.218:2494] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 22:53:20.227886 2025] [php7:error] [pid 116] [client 196.251.85.155:10296] script '/var/www/html/solucoesges.com.br/web/wp-confiq.php' not found or unable to stat, referer: www.google.com
+[Sun Nov 02 23:06:00.953742 2025] [php7:error] [pid 115] [client 196.251.70.149:18044] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 23:08:48.427450 2025] [php7:error] [pid 115] [client 209.141.52.237:19468] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 23:19:30.297992 2025] [php7:error] [pid 116] [client 209.141.61.31:24686] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sun Nov 02 23:46:10.993444 2025] [php7:error] [pid 112] [client 104.244.78.229:64865] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.yahoo.com/

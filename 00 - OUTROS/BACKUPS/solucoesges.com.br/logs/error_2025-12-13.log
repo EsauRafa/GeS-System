@@ -1,0 +1,24 @@
+[Sat Dec 13 00:34:35.409390 2025] [php7:error] [pid 114] [client 45.61.184.145:50893] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 01:06:40.997087 2025] [php7:error] [pid 117] [client 135.181.77.28:3485] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 02:10:11.639055 2025] [php7:error] [pid 113] [client 205.185.127.174:9259] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 02:34:19.220039 2025] [php7:error] [pid 116] [client 82.223.128.142:31569] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 04:24:44.434775 2025] [php7:error] [pid 115] [client 94.130.32.114:47670] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 06:08:22.991490 2025] [php7:error] [pid 111] [client 185.110.146.106:33469] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 07:40:35.233664 2025] [php7:error] [pid 117] [client 45.61.185.16:32405] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 07:53:23.409553 2025] [php7:error] [pid 105] [client 37.60.227.77:25979] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 08:10:19.653601 2025] [php7:error] [pid 114] [client 4.194.73.173:45746] script '/var/www/html/solucoesges.com.br/web/wp-plain.php' not found or unable to stat, referer: www.google.com
+[Sat Dec 13 08:10:20.030678 2025] [php7:error] [pid 112] [client 4.194.73.173:45748] script '/var/www/html/solucoesges.com.br/web/dgiumqeq.php' not found or unable to stat, referer: www.google.com
+[Sat Dec 13 09:42:26.539980 2025] [php7:error] [pid 112] [client 49.13.53.238:39695] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 09:46:04.617687 2025] [php7:error] [pid 111] [client 198.98.62.191:41047] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://duckduckgo.com/
+[Sat Dec 13 11:37:36.250610 2025] [php7:error] [pid 131] [client 137.184.64.22:19775] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 12:39:36.469102 2025] [php7:error] [pid 107] [client 68.183.237.246:15299] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 13:27:59.404600 2025] [php7:error] [pid 116] [client 46.249.40.9:22928] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 15:24:04.522181 2025] [php7:error] [pid 112] [client 178.62.32.109:18782] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 15:59:52.905946 2025] [php7:error] [pid 111] [client 199.195.253.128:46744] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 17:15:09.222767 2025] [php7:error] [pid 115] [client 159.89.50.224:13059] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 17:52:31.587633 2025] [php7:error] [pid 116] [client 198.98.62.191:56642] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.bing.com/
+[Sat Dec 13 19:22:00.484830 2025] [php7:error] [pid 118] [client 146.190.155.17:14272] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 19:32:16.549608 2025] [php7:error] [pid 112] [client 216.24.210.99:31146] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 21:25:49.462620 2025] [php7:error] [pid 116] [client 5.45.121.230:14853] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 22:04:31.925825 2025] [php7:error] [pid 115] [client 45.61.184.145:33070] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat
+[Sat Dec 13 23:47:36.505307 2025] [php7:error] [pid 118] [client 45.61.184.83:56872] script '/var/www/html/solucoesges.com.br/web/wp-login.php' not found or unable to stat, referer: https://www.google.com/
