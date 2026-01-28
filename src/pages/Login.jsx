@@ -35,14 +35,20 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {erro && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl">
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl"
+              role="alert"
+            >
               {erro}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -53,8 +59,11 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Senha</label>
+            <label htmlFor="senha" className="block text-sm font-medium text-gray-700 mb-2">
+              Senha
+            </label>
             <input
+              id="senha"
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
